@@ -4,7 +4,7 @@ Card Game
 	Have minimum size
 	Possibly add in other card games (euchre, setback, solitaire)
 
-	Hearts Game 
+	Hearts Game - http://www.wikihow.com/Play-Hearts
 		single player
 		3 computers (or select how many you want to play against 2-5?)
 	
