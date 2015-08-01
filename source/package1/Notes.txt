@@ -1,0 +1,50 @@
+Card Game 
+
+	have game screen be resizeable, dynamic
+	Have minimum size
+	Possibly add in other card games (euchre, setback, solitaire)
+
+	Hearts Game 
+		single player
+		3 computers
+	
+	Open at menu
+		selections: (Always centered, y-coord
+			New Game
+			Continue Game 			
+			Options
+			Exit
+			
+			Optional Appearances (Themes)
+			Statistics
+			
+	Open game screen 
+		each player gets 13 cards (randomly chosen out of deck of 52)
+			arrray of ints 1-13 spades 14-26 hearts 27-39 clubs 40-52 diamonds 
+			get spritesheet from offline 
+			
+			select 3 to pass
+			keep track of direction of passing, should increment every turn
+			
+			create logic on how computer selects cards to pass
+			check to see what user/comp has the 2 of clubs (always lay first)
+			
+			
+			
+			
+			
+Classes to implement:			
+	Main Class
+	CardGame
+	AI
+	GUI
+	Animation
+	SpriteSheet 
+	MouseInput
+	
+
+
+
+			
+			
+		
