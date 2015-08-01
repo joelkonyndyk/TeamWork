@@ -6,7 +6,7 @@ Card Game
 
 	Hearts Game 
 		single player
-		3 computers
+		3 computers (or select how many you want to play against 2-5?)
 	
 	Open at menu
 		selections: (Always centered, y-coord
@@ -29,8 +29,8 @@ Card Game
 			create logic on how computer selects cards to pass
 			check to see what user/comp has the 2 of clubs (always lay first)
 			
-			
-			
+			add players and scores to the board
+			add logic to calculate scores 		
 			
 			
 Classes to implement:			
