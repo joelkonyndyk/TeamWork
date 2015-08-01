@@ -1,7 +1,7 @@
 package package1;
 
-public class MainGame {
+public class Main {
 
 	// This is the main class
-	
+
 }
