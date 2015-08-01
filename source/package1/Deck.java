@@ -52,4 +52,8 @@ public class Deck {
 	}
 
 	// Getters and Setters
+
+	public Card getCard(int i) {
+		return deck[i];
+	}
 }
