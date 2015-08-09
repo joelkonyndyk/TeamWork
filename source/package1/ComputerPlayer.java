@@ -39,4 +39,13 @@ public class ComputerPlayer {
 		}
 	}
 
+	// Getters and Setters
+	public boolean isTurn() {
+		return isTurn;
+	}
+
+	public void setTurn(boolean isTurn) {
+		this.isTurn = isTurn;
+	}
+
 }

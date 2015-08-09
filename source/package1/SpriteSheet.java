@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 public class SpriteSheet {
+	
 	private BufferedImage spriteSheet;
 	BufferedImage Img = null;
 	int width = 72;

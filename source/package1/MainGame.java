@@ -2,44 +2,39 @@ package package1;
 
 import javax.swing.JFrame;
 
-public class MainGame extends JFrame {
+public class MainGame extends JFrame implements Runnable {
 
 	// This is the main class
 
-	private Deck deck;
-	
-	GameGUI drawPanel = new GameGUI();
-		
-	public void init(){
-		setSize(1024, 768);
+	private static final long serialVersionUID = 1L;
+
+	private CardGame game;
+
+	GameGUI drawPanel;
+
+	public MainGame() {
+		game = new CardGame();
+		drawPanel = new GameGUI(game);
+	}
+
+	public void init() {
+		game.init();
+
+		setSize(800, 600);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// Sets the screen default open position to the middle of the screen
+		setLocationRelativeTo(null);
 		add(drawPanel);
 	}
 
-	public void Run() {
+	public void run() {
 		init();
-		deck.outputDeck();
-		System.out.println();
-		System.out.println();
-		deck.ShuffleDeck();
-		deck.outputDeck();
-		
-		for (int i = 0; i < 10; i++) {
-			// System.out.println(names.getName());
-		}
+		game.run();
 	}
-
-	private RandomName names;
-
-	public MainGame() {
-		deck = new Deck();
-		names = new RandomName();
-	}
-
 
 	public static void main(String[] args) {
 		MainGame main = new MainGame();
-		main.Run();
+		main.run();
 	}
 }

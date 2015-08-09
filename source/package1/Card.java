@@ -25,16 +25,15 @@ public class Card {
 		this.cardNumber = cardNumber;
 		this.suit = suit;
 
-		if (suit == "spade") {
+		if (suit == "heart") {
 			suitNumber = 1;
-		} else if (suit == "heart") {
+		} else if (suit == "diamond") {
 			suitNumber = 2;
 		} else if (suit == "club") {
 			suitNumber = 3;
-		} else if (suit == "diamond") {
+		} else if (suit == "spade") {
 			suitNumber = 4;
 		}
-
 	}
 
 	// Methods

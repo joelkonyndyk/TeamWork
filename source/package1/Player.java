@@ -25,8 +25,22 @@ public class Player {
 		startCard = 40;
 
 		for (int i = 0; i < handSize; i++) {
-			hand[i] = deck.getCard(startCard);
+			// the -1 is added to account for the list starting at 0
+			hand[i] = deck.getCard(startCard - 1);
 			startCard++;
 		}
+	}
+	
+	// Getters and Setters
+	public Card[] getHand(){
+		return hand;
+	}
+
+	public boolean isTurn() {
+		return isTurn;
+	}
+
+	public void setTurn(boolean isTurn) {
+		this.isTurn = isTurn;
 	}
 }

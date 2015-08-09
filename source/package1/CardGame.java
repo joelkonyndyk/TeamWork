@@ -1,27 +1,38 @@
 package package1;
 
+import java.awt.Graphics2D;
+
+import javax.swing.JPanel;
+
 public class CardGame {
 	// Where we will create the logic for the game
 
-	private RandomName names;
-
-	private String plyrName;
-
 	private Deck deck;
 
-	private Player player;
-
-	private ComputerPlayer comp1, comp2, comp3;
+	private HeartsGame hearts;
 
 	public CardGame() {
 
+	}
+
+	public void init() {
 		deck = new Deck();
-		names = new RandomName();
+		hearts = new HeartsGame(deck);
+		hearts.init();
 
-		player = new Player(plyrName, deck);
-		comp1 = new ComputerPlayer(names.getName(), deck, 1);
-		comp2 = new ComputerPlayer(names.getName(), deck, 2);
-		comp3 = new ComputerPlayer(names.getName(), deck, 3);
+		// This makes the hearts game run
+		hearts.setRunGame(true);
+	}
 
+	public void run() {
+		if (hearts.isRunning()) {
+			hearts.run();
+		}
+	}
+
+	public void draw(Graphics2D g, SpriteSheet sprites, JPanel panel) {
+		if (hearts.isRunning()) {
+			hearts.draw(g, sprites, panel);
+		}
 	}
 }
