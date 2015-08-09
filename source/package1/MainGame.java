@@ -6,16 +6,24 @@ public class MainGame {
 
 	private Deck deck;
 
+	private RandomName names;
+
 	public MainGame() {
 		deck = new Deck();
+		names = new RandomName();
 	}
 
 	public void Run() {
-		deck.outputDeck();
-		System.out.println();
-		System.out.println();
-		deck.ShuffleDeck();
-		deck.outputDeck();
+
+		for (int i = 0; i < 10; i++) {
+			// System.out.println(names.getName());
+		}
+
+		// deck.outputDeck();
+		// System.out.println();
+		// System.out.println();
+		// deck.ShuffleDeck();
+		// deck.outputDeck();
 	}
 
 	public static void main(String[] args) {
