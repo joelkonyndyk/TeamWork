@@ -7,6 +7,7 @@ public class MainGame extends JFrame {
 	// This is the main class
 
 	private Deck deck;
+<<<<<<< HEAD
 	GameGUI drawPanel = new GameGUI();
 	
 	public MainGame() {
@@ -30,6 +31,27 @@ public class MainGame extends JFrame {
 		deck.outputDeck();
 		
 		
+=======
+
+	private RandomName names;
+
+	public MainGame() {
+		deck = new Deck();
+		names = new RandomName();
+	}
+
+	public void Run() {
+
+		for (int i = 0; i < 10; i++) {
+			// System.out.println(names.getName());
+		}
+
+		// deck.outputDeck();
+		// System.out.println();
+		// System.out.println();
+		// deck.ShuffleDeck();
+		// deck.outputDeck();
+>>>>>>> ec4b7070d8511e4661bfe9a49612a06f74c2426a
 	}
 
 	public static void main(String[] args) {

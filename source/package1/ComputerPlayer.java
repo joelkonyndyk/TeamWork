@@ -6,7 +6,7 @@ public class ComputerPlayer {
 	private Deck deck;
 
 	private Card[] hand;
-	
+
 	private boolean isTurn = false;
 
 	private int deckSection;
