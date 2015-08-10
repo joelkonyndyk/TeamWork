@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 public class SpriteSheet {
-	
+
 	private BufferedImage spriteSheet;
 	BufferedImage Img = null;
 	int width = 72;
@@ -19,9 +19,8 @@ public class SpriteSheet {
 	// Load image from the sprite sheet
 	public BufferedImage loadImage() {
 
-		
 		try {
-			Img = ImageIO.read(new File("source/package1/cards.gif"));
+			Img = ImageIO.read(new File("res/cards.gif"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -42,15 +41,5 @@ public class SpriteSheet {
 	public BufferedImage getTile(int cardNumber) {
 		return images.get(cardNumber);
 	}
-
-	/*
-	 * Old Method to Grab subimages from our sprite sheet
-	 * 
-	 * public BufferedImage getTile(int xCardLocation, int yCardLocation){
-	 * return Img.getSubimage(xCardLocation * width, yCardLocation * height,
-	 * width, height);
-	 * 
-	 * }
-	 */
 
 }
