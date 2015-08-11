@@ -1,5 +1,6 @@
 package package1;
 
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
@@ -29,10 +30,17 @@ public class CardGame {
 			hearts.run();
 		}
 	}
-
-	public void draw(Graphics2D g, SpriteSheet sprites, JPanel panel) {
+	
+	public void render(Graphics2D g, SpriteSheet sprites, JPanel panel){		
 		if (hearts.isRunning()) {
-			hearts.draw(g, sprites, panel);
+//			hearts.run();
+			hearts.render(g, sprites, panel);
 		}
 	}
+
+//	public void draw(Graphics2D g, SpriteSheet sprites, JPanel panel) {
+//		if (hearts.isRunning()) {
+//			hearts.draw(g, sprites, panel);
+//		}
+//	}
 }

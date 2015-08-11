@@ -1,5 +1,6 @@
 package package1;
 
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
@@ -12,6 +13,8 @@ public class HeartsGame {
 	private Deck deck;
 	private Player player;
 	private ComputerPlayer comp1, comp2, comp3;
+
+	Sprite sprite;
 
 	private boolean runGame = false;
 
@@ -36,15 +39,46 @@ public class HeartsGame {
 
 	}
 
-	public void draw(Graphics2D g, SpriteSheet sprites, JPanel panel) {
+	public void render(Graphics2D g, SpriteSheet sprites, JPanel panel) {
+		sprite = new Sprite(sprites.getTile(player.getHand()[1].getCardPlace()));
+		sprite.setPosition(200, 200);
+		sprite.paint(g);
+
 		int location = 50;
 
 		for (int i = 0; i < player.getHand().length; i++) {
-			g.drawImage(sprites.getTile(player.getHand()[i].getCardPlace()),
-					location, 400, panel);
+			sprite = new Sprite(sprites.getTile(player.getHand()[i]
+					.getCardPlace()));
+			sprite.setPosition(location, 400);
+			sprite.paint(g);
+
+			// g.drawImage(sprites.getTile(player.getHand()[i].getCardPlace()),
+			// location, 400, panel);
+
 			location += 50;
 		}
 	}
+
+	// public void draw(Graphics2D g, SpriteSheet sprites, JPanel panel) {
+	//
+	// sprite = new Sprite(sprites.getTile(player.getHand()[1].getCardPlace()));
+	// sprite.setPosition(200, 200);
+	// sprite.paint(g);
+	//
+	// int location = 50;
+	//
+	// for (int i = 0; i < player.getHand().length; i++) {
+	// sprite = new Sprite(sprites.getTile(player.getHand()[i]
+	// .getCardPlace()));
+	// sprite.setPosition(location, 400);
+	// sprite.paint(g);
+	//
+	// // g.drawImage(sprites.getTile(player.getHand()[i].getCardPlace()),
+	// // location, 400, panel);
+	//
+	// location += 50;
+	// }
+	// }
 
 	// Getters and Setters
 	public boolean isRunning() {
