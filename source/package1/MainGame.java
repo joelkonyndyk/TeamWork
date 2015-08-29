@@ -46,6 +46,7 @@ public class MainGame extends Canvas implements Runnable {
 		// Sets the screen default open position to the middle of the screen
 		frame.setLocationRelativeTo(null);
 		frame.add(drawPanel);
+		frame.add(this);
 	}
 
 	private synchronized void start() {

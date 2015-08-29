@@ -9,6 +9,8 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.Transparency;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageFilter;
@@ -332,6 +334,14 @@ public class Sprite implements Cloneable, Serializable {
 	}
 
 	/*
+	 * Returns the boundaries for this sprite, used for collision detection
+	 */
+	public Rectangle getBounds() {
+		return new Rectangle(this.getRealX(), this.getRealY(), this.getWidth(),
+				this.getHeight());
+	}
+
+	/*
 	 * Returns the image this sprite is using (if it was split, it will return
 	 * the current frame. Else it will return the whole image.)
 	 */
@@ -342,6 +352,48 @@ public class Sprite implements Cloneable, Serializable {
 	// Returns the whole image, no matter if it has been split or not.
 	public BufferedImage getOrigImage() {
 		return spriteImg;
+	}
+
+	// Rotates the image the amount of degrees specified by the user
+	public void rotateImage(double degrees) {
+
+		double sin = Math.abs(Math.sin(Math.toRadians(degrees)));
+		double cos = Math.abs(Math.cos(Math.toRadians(degrees)));
+		int w = this.getOrigImage().getWidth();
+		int h = this.getOrigImage().getHeight();
+		int neww = (int) Math.floor(w * cos + h * sin);
+		int newh = (int) Math.floor(h * cos + w * sin);
+
+		BufferedImage result = createCompatibleImage(neww, newh);
+		Graphics2D g = result.createGraphics();
+		g.translate((neww - w) / 2, (newh - h) / 2);
+		g.rotate(Math.toRadians(degrees), w / 2, h / 2);
+		g.drawRenderedImage(this.getOrigImage(), null);
+		g.dispose();
+
+		this.spriteImg = result;
+	}
+
+	// Rotates the image by 90 degrees
+	public void rotateImage90() {
+
+		double i = Math.toRadians(90);
+		double sin = Math.abs(Math.sin(i));
+		double cos = Math.abs(Math.cos(i));
+		int w = this.getOrigImage().getWidth();
+		int h = this.getOrigImage().getHeight();
+		int neww = (int) Math.floor(w * cos + h * sin);
+		int newh = (int) Math.floor(h * cos + w * sin);
+
+		BufferedImage result = createCompatibleImage(neww, newh);
+		Graphics2D g = result.createGraphics();
+		g.translate((neww - w) / 2, (newh - h) / 2);
+		g.rotate(i, w / 2, h / 2);
+		g.drawRenderedImage(this.getOrigImage(), null);
+		g.dispose();
+
+		this.spriteImg = result;
+
 	}
 
 	// Flips the sprite (horizontal/vertical)

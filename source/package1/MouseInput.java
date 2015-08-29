@@ -8,9 +8,9 @@ import java.awt.event.MouseMotionListener;
 public class MouseInput implements MouseListener, MouseMotionListener {
 
 	private MainGame game;
-	private GameGUI gamePanel;	
+	private GameGUI gamePanel;
 
-//	private StopWatch mouseTimer;	
+	// private StopWatch mouseTimer;
 
 	private int screenX = 0;
 	private int screenY = 0;
@@ -22,10 +22,9 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 	public MouseInput(final MainGame game, final GameGUI gamePanel) {
 		this.game = game;
 		this.gamePanel = gamePanel;
-		
 
-//		mouseTimer = new StopWatch();
-//		mouseTimer.start();
+		// mouseTimer = new StopWatch();
+		// mouseTimer.start();
 	}
 
 	public void mouseClicked(MouseEvent arg0) {
@@ -54,7 +53,9 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 
 		Point p = new Point(mx, my);
 
+//		System.out.println(p);
 		
+		gamePanel.mouseClicked(p);
 
 	}
 

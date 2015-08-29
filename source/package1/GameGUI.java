@@ -1,13 +1,8 @@
 package package1;
 
-import java.awt.AWTException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Robot;
-import java.awt.image.BufferStrategy;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.awt.Point;
 
 import javax.swing.JPanel;
 
@@ -26,7 +21,6 @@ public class GameGUI extends JPanel {
 	}
 
 	public void init() {
-		
 
 	}
 
@@ -42,15 +36,19 @@ public class GameGUI extends JPanel {
 
 		game.render(g2d, sprites, this);
 
-//		repaint();
+		// repaint();
 	}
 
 	public void tick() {
-
+		game.tick(sprites);
 	}
 
 	public void run() {
 
+	}
+
+	public void mouseClicked(Point p) {
+		game.mouseClicked(p);
 	}
 
 	// do we need to override this?

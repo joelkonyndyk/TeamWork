@@ -2,6 +2,7 @@ package package1;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 
 import javax.swing.JPanel;
 
@@ -13,6 +14,9 @@ public class HeartsGame {
 	private Deck deck;
 	private Player player;
 	private ComputerPlayer comp1, comp2, comp3;
+
+	private boolean mouseClicked = false;
+	private Point pointClicked;
 
 	Sprite sprite;
 
@@ -39,9 +43,45 @@ public class HeartsGame {
 
 	}
 
+	public void tick(SpriteSheet sprites) {
+
+		// Sprite tempSprite;
+		//
+		// if (mouseClicked) {
+		//
+		// for (int i = 0; i < player.getHand().length; i++) {
+		// tempSprite = new Sprite(sprites.getTile(player.getHand()[i]
+		// .getCardPlace()));
+		//
+		// if (tempSprite.getBounds().contains(pointClicked)) {
+		// // sprites.getTile(player.getHand()[i]
+		// // .getCardPlace())
+		// // tempSprite.rotateImage90();
+		// // sprite.paint(g);
+		// }
+		// mouseClicked = false;
+		//
+		// }
+		// }
+
+	}
+
 	public void render(Graphics2D g, SpriteSheet sprites, JPanel panel) {
+
+		// Draws single test card on the screen
 		sprite = new Sprite(sprites.getTile(player.getHand()[1].getCardPlace()));
 		sprite.setPosition(200, 200);
+		
+		if (mouseClicked) {
+			if (sprite.getBounds().contains(pointClicked)) {
+				System.out.println("Clicked");
+				sprite.rotateImage90();
+				// sprite.paint(g);
+			}
+			mouseClicked = false;
+		}
+		
+		// sprite.rotateImage90();
 		sprite.paint(g);
 
 		int location = 50;
@@ -50,6 +90,17 @@ public class HeartsGame {
 			sprite = new Sprite(sprites.getTile(player.getHand()[i]
 					.getCardPlace()));
 			sprite.setPosition(location, 400);
+			// sprite.paint(g);
+
+//			if (mouseClicked) {
+//				if (sprite.getBounds().contains(pointClicked)) {
+//					System.out.println("Clicked");
+//					sprite.rotateImage90();
+//					// sprite.paint(g);
+//				}
+//				mouseClicked = false;
+//			}
+
 			sprite.paint(g);
 
 			// g.drawImage(sprites.getTile(player.getHand()[i].getCardPlace()),
@@ -57,6 +108,19 @@ public class HeartsGame {
 
 			location += 50;
 		}
+
+		// if (mouseClicked) {
+		// if (sprite.getBounds().contains(pointClicked)) {
+		// sprite.rotateImage90();
+		// sprite.paint(g);
+		// }
+		// mouseClicked = false;
+		// }
+	}
+
+	public void mouseClicked(Point p) {
+		mouseClicked = true;
+		pointClicked = p;
 	}
 
 	// public void draw(Graphics2D g, SpriteSheet sprites, JPanel panel) {

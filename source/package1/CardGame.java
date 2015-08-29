@@ -2,6 +2,7 @@ package package1;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 
 import javax.swing.JPanel;
 
@@ -30,17 +31,29 @@ public class CardGame {
 			hearts.run();
 		}
 	}
-	
-	public void render(Graphics2D g, SpriteSheet sprites, JPanel panel){		
+
+	public void tick(SpriteSheet sprites) {
 		if (hearts.isRunning()) {
-//			hearts.run();
+			hearts.tick(sprites);
+		}
+	}
+
+	public void render(Graphics2D g, SpriteSheet sprites, JPanel panel) {
+		if (hearts.isRunning()) {
+			// hearts.run();
 			hearts.render(g, sprites, panel);
 		}
 	}
 
-//	public void draw(Graphics2D g, SpriteSheet sprites, JPanel panel) {
-//		if (hearts.isRunning()) {
-//			hearts.draw(g, sprites, panel);
-//		}
-//	}
+	public void mouseClicked(Point p) {
+		if (hearts.isRunning()) {
+
+		}
+	}
+
+	// public void draw(Graphics2D g, SpriteSheet sprites, JPanel panel) {
+	// if (hearts.isRunning()) {
+	// hearts.draw(g, sprites, panel);
+	// }
+	// }
 }
