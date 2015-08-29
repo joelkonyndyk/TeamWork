@@ -349,6 +349,10 @@ public class Sprite implements Cloneable, Serializable {
 		return spriteImg;
 	}
 
+	public void setImage(BufferedImage img) {
+		spriteImg = img;
+	}
+
 	// Returns the whole image, no matter if it has been split or not.
 	public BufferedImage getOrigImage() {
 		return spriteImg;

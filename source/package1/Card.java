@@ -1,10 +1,20 @@
 package package1;
 
+import java.awt.image.BufferedImage;
+
 public class Card {
 
 	private int cardNumber;
 	private int suitNumber;
 	private int cardPlace;
+
+	private boolean showBack = false;
+
+	private Sprite sprite;
+
+	// private Sprite cardBack;
+	private BufferedImage cardFront;
+	private BufferedImage cardBack;
 
 	private String suit;
 
@@ -14,10 +24,11 @@ public class Card {
 		this.suitNumber = suitNum;
 	}
 
-	public Card(int cardNumber, int suitNum, int cp) {
+	public Card(int cardNumber, int suitNum, int cp, Sprite sprite) {
 		this.cardNumber = cardNumber;
 		this.suitNumber = suitNum;
 		this.cardPlace = cp;
+		this.sprite = sprite;
 	}
 
 	public Card(int cardNumber, String suit) {
@@ -68,6 +79,10 @@ public class Card {
 		this.cardPlace = cp;
 	}
 
+	public void setCardBack(BufferedImage img) {
+		cardBack = img;
+	}
+
 	public String getSuit() {
 		checkSuit();
 		return this.suit;
@@ -85,5 +100,25 @@ public class Card {
 			card = "K";
 		}
 		return card;
+	}
+
+	public void setShowBack(boolean b) {
+		showBack = b;
+	}
+
+	public boolean showBack() {
+		return showBack;
+	}
+
+	// public Sprite getSprite() {
+	// if (showBack) {
+	// return this.cardBack;
+	// } else {
+	// return this.sprite;
+	// }
+	// }
+
+	public Sprite getSprite() {
+		return this.sprite;
 	}
 }

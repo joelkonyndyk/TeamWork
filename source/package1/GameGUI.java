@@ -24,23 +24,13 @@ public class GameGUI extends JPanel {
 
 	}
 
-	// public void doDrawing(Graphics g) {
-	// Graphics2D g2d = (Graphics2D) g;
-	// game.draw(g2d, sprites, this);
-	//
-	// repaint();
-	// }
-
 	public void render(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
-
-		game.render(g2d, sprites, this);
-
-		// repaint();
+		game.render(g2d);
 	}
 
 	public void tick() {
-		game.tick(sprites);
+		game.tick();
 	}
 
 	public void run() {
@@ -55,7 +45,6 @@ public class GameGUI extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		render(g);
-		// doDrawing(g);
 	}
 
 }

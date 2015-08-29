@@ -32,28 +32,21 @@ public class CardGame {
 		}
 	}
 
-	public void tick(SpriteSheet sprites) {
+	public void tick() {
 		if (hearts.isRunning()) {
-			hearts.tick(sprites);
+			hearts.tick();
 		}
 	}
 
-	public void render(Graphics2D g, SpriteSheet sprites, JPanel panel) {
-		if (hearts.isRunning()) {
-			// hearts.run();
-			hearts.render(g, sprites, panel);
+	public void render(Graphics2D g) {
+		if (hearts.isRunning()) {			
+			hearts.render(g);
 		}
 	}
 
 	public void mouseClicked(Point p) {
 		if (hearts.isRunning()) {
-
+			hearts.mouseClicked(p);
 		}
 	}
-
-	// public void draw(Graphics2D g, SpriteSheet sprites, JPanel panel) {
-	// if (hearts.isRunning()) {
-	// hearts.draw(g, sprites, panel);
-	// }
-	// }
 }

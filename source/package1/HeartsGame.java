@@ -18,12 +18,17 @@ public class HeartsGame {
 	private boolean mouseClicked = false;
 	private Point pointClicked;
 
-	Sprite sprite;
+	private Sprite sprite;
+	private Sprite cardBack;
+	private Sprite spriteTest;
+	
+	SpriteSheet spriteSheet;
 
 	private boolean runGame = false;
 
 	public HeartsGame(Deck deck) {
 		this.deck = deck;
+		spriteSheet = deck.getSpriteSheet();
 	}
 
 	public void init() {
@@ -37,112 +42,67 @@ public class HeartsGame {
 		comp3 = new ComputerPlayer(names.getName(), deck, 3);
 
 		player.setTurn(true);
+		
+//		cardBack = new Sprite(spriteSheet.getTile(57));
+
+		initHands();
+	}
+	
+	public void initHands(){		
+		// Sets the location of the cards in the players hand
+				int location = 50;
+				for (int i = 0; i < player.getHand().length; i++) {
+					player.getHand()[i].getSprite().setPosition(location, 400);
+					location += 50;
+				}
+
+				spriteTest = deck.getCard(1).getSprite();
+//				spriteTest = cardBack;
+				spriteTest.setPosition(200, 200);
 	}
 
 	public void run() {
 
 	}
 
-	public void tick(SpriteSheet sprites) {
-
-		// Sprite tempSprite;
-		//
-		// if (mouseClicked) {
-		//
-		// for (int i = 0; i < player.getHand().length; i++) {
-		// tempSprite = new Sprite(sprites.getTile(player.getHand()[i]
-		// .getCardPlace()));
-		//
-		// if (tempSprite.getBounds().contains(pointClicked)) {
-		// // sprites.getTile(player.getHand()[i]
-		// // .getCardPlace())
-		// // tempSprite.rotateImage90();
-		// // sprite.paint(g);
-		// }
-		// mouseClicked = false;
-		//
-		// }
-		// }
-
-	}
-
-	public void render(Graphics2D g, SpriteSheet sprites, JPanel panel) {
-
-		// Draws single test card on the screen
-		sprite = new Sprite(sprites.getTile(player.getHand()[1].getCardPlace()));
-		sprite.setPosition(200, 200);
+	public void tick() {
 		
+		for (int i = 0; i < 52; i++){
+			for (int j = 0; j < player.getHand().length; j++){
+				if (deck.getCard(i).equals(player.getHand()[j])){
+//					System.out.println("Works");
+					deck.getCard(i).setShowBack(false);
+				} else{
+					deck.getCard(i).setShowBack(true);
+				}				
+			}
+		}
+
 		if (mouseClicked) {
-			if (sprite.getBounds().contains(pointClicked)) {
-				System.out.println("Clicked");
-				sprite.rotateImage90();
-				// sprite.paint(g);
+			if (spriteTest.getBounds().contains(pointClicked)) {
+				spriteTest.rotateImage90();
+				spriteTest
+						.setPosition(spriteTest.getX() + 5, spriteTest.getY());
 			}
 			mouseClicked = false;
 		}
-		
-		// sprite.rotateImage90();
-		sprite.paint(g);
 
-		int location = 50;
+	}
+
+	public void render(Graphics2D g) {
+
+		spriteTest.paint(g);
 
 		for (int i = 0; i < player.getHand().length; i++) {
-			sprite = new Sprite(sprites.getTile(player.getHand()[i]
-					.getCardPlace()));
-			sprite.setPosition(location, 400);
-			// sprite.paint(g);
+			player.getHand()[i].getSprite().paint(g);
 
-//			if (mouseClicked) {
-//				if (sprite.getBounds().contains(pointClicked)) {
-//					System.out.println("Clicked");
-//					sprite.rotateImage90();
-//					// sprite.paint(g);
-//				}
-//				mouseClicked = false;
-//			}
-
-			sprite.paint(g);
-
-			// g.drawImage(sprites.getTile(player.getHand()[i].getCardPlace()),
-			// location, 400, panel);
-
-			location += 50;
 		}
-
-		// if (mouseClicked) {
-		// if (sprite.getBounds().contains(pointClicked)) {
-		// sprite.rotateImage90();
-		// sprite.paint(g);
-		// }
-		// mouseClicked = false;
-		// }
 	}
 
 	public void mouseClicked(Point p) {
 		mouseClicked = true;
 		pointClicked = p;
 	}
-
-	// public void draw(Graphics2D g, SpriteSheet sprites, JPanel panel) {
-	//
-	// sprite = new Sprite(sprites.getTile(player.getHand()[1].getCardPlace()));
-	// sprite.setPosition(200, 200);
-	// sprite.paint(g);
-	//
-	// int location = 50;
-	//
-	// for (int i = 0; i < player.getHand().length; i++) {
-	// sprite = new Sprite(sprites.getTile(player.getHand()[i]
-	// .getCardPlace()));
-	// sprite.setPosition(location, 400);
-	// sprite.paint(g);
-	//
-	// // g.drawImage(sprites.getTile(player.getHand()[i].getCardPlace()),
-	// // location, 400, panel);
-	//
-	// location += 50;
-	// }
-	// }
 
 	// Getters and Setters
 	public boolean isRunning() {

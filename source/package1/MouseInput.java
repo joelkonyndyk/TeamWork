@@ -56,6 +56,8 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 //		System.out.println(p);
 		
 		gamePanel.mouseClicked(p);
+		
+	
 
 	}
 
