@@ -104,6 +104,12 @@ public class Card {
 
 	public void setShowBack(boolean b) {
 		showBack = b;
+
+		if (showBack) {
+			this.sprite.setImage(cardBack);
+		} else {
+			this.sprite.setImage(cardFront);
+		}
 	}
 
 	public boolean showBack() {

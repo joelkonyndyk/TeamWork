@@ -21,7 +21,7 @@ public class HeartsGame {
 	private Sprite sprite;
 	private Sprite cardBack;
 	private Sprite spriteTest;
-	
+
 	SpriteSheet spriteSheet;
 
 	private boolean runGame = false;
@@ -42,23 +42,27 @@ public class HeartsGame {
 		comp3 = new ComputerPlayer(names.getName(), deck, 3);
 
 		player.setTurn(true);
-		
-//		cardBack = new Sprite(spriteSheet.getTile(57));
+
+		// cardBack = new Sprite(spriteSheet.getTile(57));
 
 		initHands();
 	}
-	
-	public void initHands(){		
-		// Sets the location of the cards in the players hand
-				int location = 50;
-				for (int i = 0; i < player.getHand().length; i++) {
-					player.getHand()[i].getSprite().setPosition(location, 400);
-					location += 50;
-				}
 
-				spriteTest = deck.getCard(1).getSprite();
-//				spriteTest = cardBack;
-				spriteTest.setPosition(200, 200);
+	public void initHands() {
+		// Sets the location of the cards in the players hand
+		int location = 50;
+		for (int i = 0; i < player.getHand().length; i++) {
+			player.getHand()[i].getSprite().setPosition(location, 400);
+			// player.getHand()[i].setShowBack(false);
+
+			comp1.getHand()[i].getSprite().setPosition(location, 50);
+
+			location += 50;
+		}
+
+		spriteTest = deck.getCard(1).getSprite();
+		// spriteTest = cardBack;
+		spriteTest.setPosition(200, 200);
 	}
 
 	public void run() {
@@ -66,17 +70,31 @@ public class HeartsGame {
 	}
 
 	public void tick() {
-		
-		for (int i = 0; i < 52; i++){
-			for (int j = 0; j < player.getHand().length; j++){
-				if (deck.getCard(i).equals(player.getHand()[j])){
-//					System.out.println("Works");
-					deck.getCard(i).setShowBack(false);
-				} else{
-					deck.getCard(i).setShowBack(true);
-				}				
-			}
-		}
+
+		// for (int i = 0; i < 52; i++) {
+		// int count = 0;
+		// for (int j = 0; j < player.getHand().length; j++) {
+		// if (deck.getCard(i).equals(player.getHand()[j])) {
+		// // System.out.println("Works");
+		// count++;
+		// }
+		// }
+		// if (count > 0) {
+		// // deck.getCard(i).setShowBack(false);
+		// } else {
+		// // deck.getCard(i).setShowBack(true);
+		// }
+		// }
+		//
+		// for (int i = 0; i < player.getHand().length; i++) {
+		// for (int j = 0; j < 52; j++) {
+		//
+		// if (deck.getCard(j).equals(player.getHand()[i])) {
+		// deck.
+		// }
+		//
+		// }
+		// }
 
 		if (mouseClicked) {
 			if (spriteTest.getBounds().contains(pointClicked)) {
@@ -95,6 +113,7 @@ public class HeartsGame {
 
 		for (int i = 0; i < player.getHand().length; i++) {
 			player.getHand()[i].getSprite().paint(g);
+			comp1.getHand()[i].getSprite().paint(g);
 
 		}
 	}
