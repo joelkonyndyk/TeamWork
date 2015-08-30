@@ -22,7 +22,8 @@ public class CardGame {
 		hearts = new HeartsGame(deck);
 		hearts.init();
 
-		// This makes the hearts game run
+		// This makes the hearts game run. Will have to switch this when there
+		// are multiple game options
 		hearts.setRunGame(true);
 	}
 
@@ -39,7 +40,7 @@ public class CardGame {
 	}
 
 	public void render(Graphics2D g) {
-		if (hearts.isRunning()) {			
+		if (hearts.isRunning()) {
 			hearts.render(g);
 		}
 	}

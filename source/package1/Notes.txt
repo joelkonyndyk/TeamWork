@@ -1,5 +1,8 @@
 Card Game 
 
+
+	[] Make the ace appear as the high card
+
 	have game screen be resizeable, dynamic
 	Have minimum size
 	Possibly add in other card games (euchre, setback, solitaire)

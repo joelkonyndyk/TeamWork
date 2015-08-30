@@ -6,6 +6,7 @@ public class Player {
 	private Deck deck;
 
 	private Card[] hand;
+	private Card[] sort;
 
 	private boolean isTurn = false;
 
@@ -22,6 +23,7 @@ public class Player {
 	// Initialize
 	public void init() {
 		hand = new Card[handSize];
+		sort = new Card[handSize];
 		startCard = 40;
 
 		for (int i = 0; i < handSize; i++) {
@@ -30,9 +32,43 @@ public class Player {
 			startCard++;
 		}
 	}
-	
+
+	public void sortHand() {
+
+		boolean swapped = true;
+		int j = 0;
+		Card tmp;
+		while (swapped) {
+			swapped = false;
+			j++;
+			for (int i = 0; i < hand.length - j; i++) {
+				if (hand[i].getSuitNumber() > hand[i + 1].getSuitNumber()) {
+					tmp = hand[i];
+					hand[i] = hand[i + 1];
+					hand[i + 1] = tmp;
+					swapped = true;
+				}
+				if (hand[i].getSuitNumber() == hand[i + 1].getSuitNumber()) {
+					if (hand[i].getCardNumber() > hand[i + 1].getCardNumber()) {
+						tmp = hand[i];
+						hand[i] = hand[i + 1];
+						hand[i + 1] = tmp;
+						swapped = true;
+					}
+				}
+			}
+		}
+	}
+
+	// ///////////////////
 	// Getters and Setters
-	public Card[] getHand(){
+	// ////////////////////
+
+	public String getName() {
+		return name;
+	}
+
+	public Card[] getHand() {
 		return hand;
 	}
 
