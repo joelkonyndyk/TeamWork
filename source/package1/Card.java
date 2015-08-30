@@ -12,7 +12,6 @@ public class Card {
 
 	private Sprite sprite;
 
-	// private Sprite cardBack;
 	private BufferedImage cardFront;
 	private BufferedImage cardBack;
 
@@ -61,7 +60,9 @@ public class Card {
 		}
 	}
 
+	// ///////////////////
 	// Getters and Setters
+	// ////////////////////
 
 	public int getCardNumber() {
 		return this.cardNumber;
@@ -104,19 +105,17 @@ public class Card {
 
 	public void setShowBack(boolean b) {
 		showBack = b;
+
+		if (showBack) {
+			this.sprite.setImage(cardBack);
+		} else {
+			sprite.setImage(cardFront);
+		}
 	}
 
 	public boolean showBack() {
 		return showBack;
 	}
-
-	// public Sprite getSprite() {
-	// if (showBack) {
-	// return this.cardBack;
-	// } else {
-	// return this.sprite;
-	// }
-	// }
 
 	public Sprite getSprite() {
 		return this.sprite;

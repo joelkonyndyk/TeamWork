@@ -40,7 +40,7 @@ public class MainGame extends Canvas implements Runnable {
 		this.addMouseListener(new MouseInput(this, drawPanel));
 		this.addMouseMotionListener(new MouseInput(this, drawPanel));
 
-		frame.setSize(800, 600);
+		frame.setSize(900, 600);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Sets the screen default open position to the middle of the screen
@@ -120,11 +120,11 @@ public class MainGame extends Canvas implements Runnable {
 		}
 		Graphics g = bs.getDrawGraphics();
 
+		// /////////////////////
 		// anything under here is what is being drawn
-		// game.run();
-		// game.render(g);
+		// /////////////////////
 
-		g.setColor(Color.CYAN);
+		g.setColor(Color.DARK_GRAY);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		drawPanel.render(g);
 
