@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 public class HeartsGame {
 	// This is where we will create the Hearts game logic
 
+	int leadSuitPlayer = true;
+	boolean trumpPlayed = false;
+		
 	private RandomName names;
 	private String plyrName;
 	private Deck deck;

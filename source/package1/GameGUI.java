@@ -41,7 +41,6 @@ public class GameGUI extends JPanel {
 		game.mouseClicked(p);
 	}
 
-	// do we need to override this?
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		render(g);
