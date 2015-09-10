@@ -11,6 +11,9 @@ public class HeartsGame {
 	private boolean leadSuitPlayer = true;
 	private boolean trumpPlayed = false;
 
+	private boolean passingCards = false;
+	private int roundNumber = 1;
+
 	private RandomName names;
 	private String plyrName = "JOEL";
 	private Deck deck;
@@ -36,6 +39,7 @@ public class HeartsGame {
 	}
 
 	public void init() {
+
 		names = new RandomName();
 
 		deck.ShuffleDeck();
@@ -50,6 +54,7 @@ public class HeartsGame {
 		initHands();
 
 		font = new Font("SansSerif", Font.BOLD, 14);
+
 	}
 
 	public void initHands() {
@@ -145,7 +150,28 @@ public class HeartsGame {
 	public void mouseClicked(Point p) {
 		mouseClicked = true;
 		pointClicked = p;
+
+		// playing with drawing new cards
+
+		System.out.println(player.getHand()[2].getCardNumber());
+
+		System.out.println("");
+
+		player.setHand(0, 1);
+		player.setHand(1, 2);
+		player.setHand(3, 2);
+		player.setHand(4, 2);
+
+		System.out.println(player.getHand()[2].getCardNumber());
+		System.out.println(player.getHand()[2]);
+
 	}
+
+	// ////////////////////// Game Logic and rules //////////////////////////
+
+	// Pass three cards @ beg. of each round
+
+	// //////////////////////////////////////////////////////////////////////////////////
 
 	// Getters and Setters
 	public boolean isRunning() {

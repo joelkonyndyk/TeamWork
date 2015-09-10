@@ -141,3 +141,16 @@ public class MainGame extends Canvas implements Runnable {
 		// main.run();
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

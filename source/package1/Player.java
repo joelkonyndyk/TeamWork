@@ -71,6 +71,10 @@ public class Player {
 	public Card[] getHand() {
 		return hand;
 	}
+	
+	public void setHand(int currentCardIndex, int desiredCardIndex){
+		hand[currentCardIndex] = hand[desiredCardIndex];
+	}
 
 	public boolean isTurn() {
 		return isTurn;

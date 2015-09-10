@@ -63,7 +63,7 @@ public class Card {
 	// ///////////////////
 	// Getters and Setters
 	// ////////////////////
-
+	
 	public int getCardNumber() {
 		return this.cardNumber;
 	}

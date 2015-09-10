@@ -43,6 +43,7 @@ public class CardGame {
 		if (hearts.isRunning()) {
 			hearts.render(g);
 		}
+
 	}
 
 	public void mouseClicked(Point p) {
