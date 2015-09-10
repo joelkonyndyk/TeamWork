@@ -50,6 +50,7 @@ public class ComputerPlayer {
 	public Card[] getHand() {
 		return hand;
 	}
+	
 
 	public boolean isTurn() {
 		return isTurn;

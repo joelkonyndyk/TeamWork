@@ -13,7 +13,8 @@ public class HeartsGame {
 	boolean trumpPlayed = false;
 	boolean passingCards = false;
 	int roundNumber = 1;
-
+	int x = 0;
+	
 	private RandomName names;
 	private String plyrName = "JOEL";
 	private Deck deck;
@@ -121,7 +122,6 @@ public class HeartsGame {
 			comp1.getHand()[i].getSprite().paint(g);
 			comp2.getHand()[i].getSprite().paint(g);
 			comp3.getHand()[i].getSprite().paint(g);
-
 		}
 	}
 
@@ -142,18 +142,14 @@ public class HeartsGame {
 
 		
 //playing with drawing new cards
-			
-		System.out.println(player.getHand()[2].getCardNumber());
 		
-		System.out.println("");
+		player.getHand()[0].getSprite().setPosition(player.getP1CardLocX()[1], 445/2);
 		
-		player.setHand(0, 1);
-		player.setHand(1, 2);
-		player.setHand(3, 2);
-		player.setHand(4, 2);
+		//card place Bottom
+		player.getHand()[1].getSprite().setPosition(400, 300);
+		//card place TOP
+		player.getHand()[2].getSprite().setPosition(400, 175);
 		
-		System.out.println(player.getHand()[2].getCardNumber());
-		System.out.println(player.getHand()[2]);
 		
 	}
 

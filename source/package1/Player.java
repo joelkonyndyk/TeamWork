@@ -8,6 +8,8 @@ public class Player {
 	private Card[] hand;
 	private Card[] sort;
 
+	private int[] playerHandPositionX = { 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700 };
+	
 	private boolean isTurn = false;
 
 	private int startCard;
@@ -70,6 +72,10 @@ public class Player {
 
 	public Card[] getHand() {
 		return hand;
+	}
+	
+	public int[] getP1CardLocX(){
+		return playerHandPositionX;
 	}
 	
 	public void setHand(int currentCardIndex, int desiredCardIndex){
