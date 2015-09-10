@@ -8,9 +8,9 @@ import java.awt.Point;
 public class HeartsGame {
 	// This is where we will create the Hearts game logic
 
-	int leadSuitPlayer = true;
-	boolean trumpPlayed = false;
-		
+	private boolean leadSuitPlayer = true;
+	private boolean trumpPlayed = false;
+
 	private RandomName names;
 	private String plyrName = "JOEL";
 	private Deck deck;
@@ -89,6 +89,17 @@ public class HeartsGame {
 	public void tick() {
 
 		if (mouseClicked) {
+
+			for (int i = 0; i < player.getHand().length; i++) {
+				if (player.getHand()[i].getSprite().getBounds()
+						.contains(pointClicked)) {
+					player.getHand()[i].getSprite().rotateImage90();
+					player.getHand()[i].getSprite().setPosition(
+							player.getHand()[i].getSprite().getX() + 10,
+							player.getHand()[i].getSprite().getY());
+				}
+			}
+
 			if (spriteTest.getBounds().contains(pointClicked)) {
 				spriteTest.rotateImage90();
 				spriteTest.setPosition(spriteTest.getX() + 10,
