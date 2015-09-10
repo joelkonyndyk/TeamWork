@@ -27,9 +27,10 @@ public class HeartsGame {
 	// private Sprite sprite;
 	// private Sprite cardBack;
 	private Sprite spriteTest;
+	private Sprite spriteTest2;
 
 	SpriteSheet spriteSheet;
-
+	
 	private boolean runGame = false;
 
 	Font font;
@@ -85,6 +86,7 @@ public class HeartsGame {
 
 		// Draws the test card on the screen
 		spriteTest = deck.getCard(0).getSprite().clone();
+		spriteTest2 = deck.getCard(1).getSprite().clone();
 		spriteTest.setPosition(200, 200);
 	}
 
@@ -116,6 +118,7 @@ public class HeartsGame {
 		DrawOutline(comp3.getName(), 780, 70, g);
 
 		spriteTest.paint(g);
+		spriteTest2.paint(g);
 
 		for (int i = 0; i < player.getHand().length; i++) {
 			player.getHand()[i].getSprite().paint(g);
@@ -143,7 +146,7 @@ public class HeartsGame {
 		
 //playing with drawing new cards
 		
-		player.getHand()[0].getSprite().setPosition(player.getP1CardLocX()[1], 445/2);
+//		player.getHand()[0].getSprite().setPosition(player.getP1CardLocX()[1], 445/2);
 		
 		//card place Bottom
 		player.getHand()[1].getSprite().setPosition(400, 300);
