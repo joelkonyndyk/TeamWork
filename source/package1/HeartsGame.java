@@ -4,13 +4,16 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.Scanner;
 
 public class HeartsGame {
 	// This is where we will create the Hearts game logic
 
-	int leadSuitPlayer = true;
+	boolean leadSuitPlayer = true;
 	boolean trumpPlayed = false;
-		
+	boolean passingCards = false;
+	int roundNumber = 1;
+
 	private RandomName names;
 	private String plyrName = "JOEL";
 	private Deck deck;
@@ -36,6 +39,7 @@ public class HeartsGame {
 	}
 
 	public void init() {
+
 		names = new RandomName();
 
 		deck.ShuffleDeck();
@@ -50,6 +54,7 @@ public class HeartsGame {
 		initHands();
 
 		font = new Font("SansSerif", Font.BOLD, 14);
+
 	}
 
 	public void initHands() {
@@ -134,7 +139,29 @@ public class HeartsGame {
 	public void mouseClicked(Point p) {
 		mouseClicked = true;
 		pointClicked = p;
+
+		
+//playing with drawing new cards
+			
+		System.out.println(player.getHand()[2].getCardNumber());
+		
+		System.out.println("");
+		
+		player.setHand(0, 1);
+		player.setHand(1, 2);
+		player.setHand(3, 2);
+		player.setHand(4, 2);
+		
+		System.out.println(player.getHand()[2].getCardNumber());
+		System.out.println(player.getHand()[2]);
+		
 	}
+
+//////////////////////// Game Logic and rules //////////////////////////
+		
+	// Pass three cards @ beg. of each round
+
+////////////////////////////////////////////////////////////////////////////////////
 
 	// Getters and Setters
 	public boolean isRunning() {
