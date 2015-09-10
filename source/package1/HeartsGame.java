@@ -4,17 +4,25 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.util.Scanner;
 
 public class HeartsGame {
 	// This is where we will create the Hearts game logic
 
+<<<<<<< HEAD
 	boolean leadSuitPlayer = true;
 	boolean trumpPlayed = false;
 	boolean passingCards = false;
 	int roundNumber = 1;
 	int x = 0;
 	
+=======
+	private boolean leadSuitPlayer = true;
+	private boolean trumpPlayed = false;
+
+	private boolean passingCards = false;
+	private int roundNumber = 1;
+
+>>>>>>> 6a7e60e10f1782b23819430f55189f1826681892
 	private RandomName names;
 	private String plyrName = "JOEL";
 	private Deck deck;
@@ -97,6 +105,17 @@ public class HeartsGame {
 	public void tick() {
 
 		if (mouseClicked) {
+
+			for (int i = 0; i < player.getHand().length; i++) {
+				if (player.getHand()[i].getSprite().getBounds()
+						.contains(pointClicked)) {
+					player.getHand()[i].getSprite().rotateImage90();
+					player.getHand()[i].getSprite().setPosition(
+							player.getHand()[i].getSprite().getX() + 10,
+							player.getHand()[i].getSprite().getY());
+				}
+			}
+
 			if (spriteTest.getBounds().contains(pointClicked)) {
 				spriteTest.rotateImage90();
 				spriteTest.setPosition(spriteTest.getX() + 10,
@@ -143,6 +162,7 @@ public class HeartsGame {
 		mouseClicked = true;
 		pointClicked = p;
 
+<<<<<<< HEAD
 		
 //playing with drawing new cards
 		
@@ -154,13 +174,29 @@ public class HeartsGame {
 		player.getHand()[2].getSprite().setPosition(400, 175);
 		
 		
+=======
+		// playing with drawing new cards
+
+		System.out.println(player.getHand()[2].getCardNumber());
+
+		System.out.println("");
+
+		player.setHand(0, 1);
+		player.setHand(1, 2);
+		player.setHand(3, 2);
+		player.setHand(4, 2);
+
+		System.out.println(player.getHand()[2].getCardNumber());
+		System.out.println(player.getHand()[2]);
+
+>>>>>>> 6a7e60e10f1782b23819430f55189f1826681892
 	}
 
-//////////////////////// Game Logic and rules //////////////////////////
-		
+	// ////////////////////// Game Logic and rules //////////////////////////
+
 	// Pass three cards @ beg. of each round
 
-////////////////////////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////////////////////
 
 	// Getters and Setters
 	public boolean isRunning() {
