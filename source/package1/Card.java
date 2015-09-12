@@ -71,6 +71,10 @@ public class Card {
 	public int getSuitNumber() {
 		return this.suitNumber;
 	}
+	
+	public int getCardAndSuitNumber(){
+		return this.suitNumber * this.cardNumber;
+	}
 
 	public int getCardPlace() {
 		return this.cardPlace;
