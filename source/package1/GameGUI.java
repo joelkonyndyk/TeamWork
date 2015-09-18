@@ -2,7 +2,7 @@ package package1;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.image.BufferStrategy;
+import java.awt.Point;
 
 import javax.swing.JPanel;
 
@@ -20,21 +20,30 @@ public class GameGUI extends JPanel {
 
 	}
 
-	public void doDrawing(Graphics g) {
-		Graphics2D g2d = (Graphics2D) g;
-		game.draw(g2d, sprites, this);
+	public void init() {
 
-		repaint();
+	}
+
+	public void render(Graphics g) {
+		Graphics2D g2d = (Graphics2D) g;
+		game.render(g2d);
+	}
+
+	public void tick() {
+		game.tick();
 	}
 
 	public void run() {
 
 	}
 
-	// do we need to override this?
+	public void mouseClicked(Point p) {
+		game.mouseClicked(p);
+	}
+
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		doDrawing(g);
+		render(g);
 	}
 
 }

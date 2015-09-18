@@ -26,11 +26,11 @@ public class ComputerPlayer {
 		hand = new Card[handSize];
 
 		if (deckSection == 1) {
-			startCard = 1;
+			startCard = 0;
 		} else if (deckSection == 2) {
-			startCard = 14;
+			startCard = 13;
 		} else if (deckSection == 3) {
-			startCard = 27;
+			startCard = 26;
 		}
 
 		for (int i = 0; i < handSize; i++) {
@@ -39,7 +39,19 @@ public class ComputerPlayer {
 		}
 	}
 
+	// ///////////////////
 	// Getters and Setters
+	// ////////////////////
+
+	public String getName() {
+		return compName;
+	}
+
+	public Card[] getHand() {
+		return hand;
+	}
+	
+
 	public boolean isTurn() {
 		return isTurn;
 	}

@@ -1,25 +1,47 @@
 package package1;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
-
-import javax.swing.JPanel;
+import java.awt.Point;
 
 public class HeartsGame {
 	// This is where we will create the Hearts game logic
 
+	int x = 0;
+	private boolean leadSuitPlayer = true;
+	private boolean trumpPlayed = false;
+	private boolean passingCards = true;
+	private int roundNumber = 1;
+	private int passingThreeCardsCounter = 0;
+	private int[] cardsHaveBeenPassed = { -1, -1, -1 };
+
 	private RandomName names;
-	private String plyrName;
+	private String plyrName = "JOEL";
 	private Deck deck;
 	private Player player;
 	private ComputerPlayer comp1, comp2, comp3;
 
+	private boolean mouseClicked = false;
+	private Point pointClicked;
+
+	// private Sprite sprite;
+	// private Sprite cardBack;
+	private Sprite spriteTest;
+
+	SpriteSheet spriteSheet;
+
 	private boolean runGame = false;
+
+	Font font;
 
 	public HeartsGame(Deck deck) {
 		this.deck = deck;
+		spriteSheet = deck.getSpriteSheet();
 	}
 
 	public void init() {
+
 		names = new RandomName();
 
 		deck.ShuffleDeck();
@@ -29,21 +51,184 @@ public class HeartsGame {
 		comp2 = new ComputerPlayer(names.getName(), deck, 2);
 		comp3 = new ComputerPlayer(names.getName(), deck, 3);
 
-		player.setTurn(true);
+		initHands();
+
+		font = new Font("SansSerif", Font.BOLD, 14);
+
+	}
+
+	public void initHands() {
+		// Sets the location of the cards in the players hand
+		int location = 100;
+		int locationTop = 280;
+		int locationSides = 80;
+
+		player.sortHand();
+
+		for (int i = 0; i < player.getHand().length; i++) {
+			player.getHand()[i].getSprite().setPosition(location, 445);
+			// player.getHand()[i].setShowBack(false);
+
+			comp2.getHand()[i].getSprite().setPosition(locationTop, 30);
+			comp1.getHand()[i].getSprite().setPosition(30, locationSides);
+			comp3.getHand()[i].getSprite().setPosition(780, locationSides);
+
+			comp1.getHand()[i].setShowBack(true);
+			comp2.getHand()[i].setShowBack(true);
+			comp3.getHand()[i].setShowBack(true);
+
+			location += 50;
+			locationTop += 20;
+			locationSides += 20;
+		}
+
+		// Draws the test card on the screen
+		spriteTest = deck.getCard(0).getSprite().clone();
+
 	}
 
 	public void run() {
 
 	}
 
-	public void draw(Graphics2D g, SpriteSheet sprites, JPanel panel) {
-		int location = 50;
+	// move these to the bottom when finished with game logic
+	public void checkCardAlreadyPassed(int z) {
+
+		for (int i = 0; i < 3; i++) {
+			if (cardsHaveBeenPassed[i] == z) {
+				passingThreeCardsCounter--;
+				i = 3;
+
+			}
+
+		}
+
+	}
+
+	public void addCardToAlreadyPassed(int z) {
+		for (int i = 0; i < 3; i++) {
+			if (cardsHaveBeenPassed[i] == -1 && cardsHaveBeenPassed[0] != z
+					&& cardsHaveBeenPassed[1] != z
+					&& cardsHaveBeenPassed[2] != z) {
+				cardsHaveBeenPassed[i] = z;
+				break;
+
+			}
+
+		}
+
+	}
+
+	public void twoOfClubsStarts() {
+		for (int i = 0; i < 12; i++) {
+			if (player.getHand()[i].getCardAndSuitNumber() == 6) {
+				player.setTurn(true);
+			} else if (comp1.getHand()[i].getCardAndSuitNumber() == 6) {
+				comp1.setTurn(true);
+			} else if (comp2.getHand()[i].getCardAndSuitNumber() == 6) {
+				comp2.setTurn(true);
+			}
+			comp3.setTurn(true);
+		}
+	}
+
+	public void tick() {
+
+		// passingCards *select 3 cards* then turn off passing cards
+		if (mouseClicked && passingCards == true) {
+
+			for (int i = 0; i < player.getHand().length; i++) {
+
+				if (player.getHand()[i].getSprite().getVisibleBounds(i)
+						.contains(pointClicked)
+						&& passingThreeCardsCounter < 3) {
+
+					checkCardAlreadyPassed(player.getHand()[i]
+							.getCardAndSuitNumber());
+					addCardToAlreadyPassed(player.getHand()[i]
+							.getCardAndSuitNumber());
+					passingThreeCardsCounter++;
+
+					System.out.println(cardsHaveBeenPassed[0]);
+					System.out.println(cardsHaveBeenPassed[1]);
+					System.out.println(cardsHaveBeenPassed[2]);
+
+					System.out.println(passingThreeCardsCounter
+							+ " Card Counter");
+				}
+			}
+
+			if (passingThreeCardsCounter == 3) {
+				passingThreeCardsCounter = 0;
+				passingCards = false;
+				System.out.println("Passing Cards Complete");
+			}
+
+			mouseClicked = false;
+			twoOfClubsStarts();
+		}
+
+		// Game play after cards have been passed
+		if (mouseClicked && player.isTurn() == true && passingCards == false) {
+
+			for (int i = 0; i < player.getHand().length; i++) {
+				if (player.getHand()[i].getSprite().getVisibleBounds(i)
+						.contains(pointClicked)
+						&& player.getHand()[i].getCardNumber() != -1) {
+
+					System.out.println(player.getHand()[i].getCardNumber());
+					System.out.println(player.isTurn());
+
+					// *********How do I make the cards reprint when I
+					// change
+					// how the sprite looks?*******
+					// comp1.getHand()[i].setShowBack(false);
+					// comp1.getHand()[i].getSprite().setPosition(400, 175);
+				}
+
+			}
+
+			mouseClicked = false;
+			player.setTurn(false);
+
+		}
+	}
+
+	public void render(Graphics2D g) {
+
+		g.setFont(font);
+
+		// Draws the players names on the screen
+		DrawOutline(player.getName(), 280, 410, g);
+		DrawOutline(comp1.getName(), 30, 70, g);
+		DrawOutline(comp2.getName(), 280, 20, g);
+		DrawOutline(comp3.getName(), 780, 70, g);
+
+		spriteTest.paint(g);
 
 		for (int i = 0; i < player.getHand().length; i++) {
-			g.drawImage(sprites.getTile(player.getHand()[i].getCardPlace()),
-					location, 400, panel);
-			location += 50;
+			player.getHand()[i].getSprite().paint(g);
+			comp1.getHand()[i].getSprite().paint(g);
+			comp2.getHand()[i].getSprite().paint(g);
+			comp3.getHand()[i].getSprite().paint(g);
 		}
+	}
+
+	public void DrawOutline(String str, int x, int y, Graphics2D g2d) {
+		g2d.setColor(Color.BLACK);
+		g2d.drawString(str, x - 1, y);
+		g2d.drawString(str, x + 1, y);
+		g2d.drawString(str, x, y - 1);
+		g2d.drawString(str, x, y + 1);
+
+		g2d.setColor(Color.WHITE);
+		g2d.drawString(str, x, y);
+	}
+
+	public void mouseClicked(Point p) {
+		mouseClicked = true;
+		pointClicked = p;
+
 	}
 
 	// Getters and Setters

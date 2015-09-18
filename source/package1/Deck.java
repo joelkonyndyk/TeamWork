@@ -6,12 +6,20 @@ public class Deck {
 
 	private Card[] deck;
 
+	private int[] suitType = { 3, 1, 2, 4 };
+
 	private final int deckSize = 52;
 	private final int cardsInSuit = 13;
+
+	private SpriteSheet spriteSheet = new SpriteSheet();
 
 	// Constructor
 	public Deck() {
 		deck = new Card[deckSize];
+
+		spriteSheet.loadImage();
+		spriteSheet.storeImages();
+
 		init();
 	}
 
@@ -19,14 +27,18 @@ public class Deck {
 	public void init() {
 		Card tempCard;
 		int suitCount = 1;
-		int suitType = 1;
+		int sType = 0;
+
+		Sprite tempSprite;
 
 		for (int i = 0; i < deckSize; i++) {
 			if (suitCount > 13) {
 				suitCount = 1;
-				suitType++;
+				sType++;
 			}
-			deck[i] = new Card(suitCount, suitType, i + 1);
+			tempSprite = new Sprite(spriteSheet.getTile(i));
+			deck[i] = new Card(suitCount, suitType[sType], i + 1, tempSprite);
+			deck[i].setCardBack(spriteSheet.getTile(59));
 			suitCount++;
 		}
 	}
@@ -51,9 +63,15 @@ public class Deck {
 		}
 	}
 
+	// ///////////////////
 	// Getters and Setters
+	// ////////////////////
 
 	public Card getCard(int i) {
 		return deck[i];
+	}
+
+	public SpriteSheet getSpriteSheet() {
+		return spriteSheet;
 	}
 }

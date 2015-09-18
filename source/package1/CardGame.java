@@ -1,6 +1,8 @@
 package package1;
 
+import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 
 import javax.swing.JPanel;
 
@@ -20,7 +22,8 @@ public class CardGame {
 		hearts = new HeartsGame(deck);
 		hearts.init();
 
-		// This makes the hearts game run
+		// This makes the hearts game run. Will have to switch this when there
+		// are multiple game options
 		hearts.setRunGame(true);
 	}
 
@@ -30,9 +33,22 @@ public class CardGame {
 		}
 	}
 
-	public void draw(Graphics2D g, SpriteSheet sprites, JPanel panel) {
+	public void tick() {
 		if (hearts.isRunning()) {
-			hearts.draw(g, sprites, panel);
+			hearts.tick();
+		}
+	}
+
+	public void render(Graphics2D g) {
+		if (hearts.isRunning()) {
+			hearts.render(g);
+		}
+
+	}
+
+	public void mouseClicked(Point p) {
+		if (hearts.isRunning()) {
+			hearts.mouseClicked(p);
 		}
 	}
 }
