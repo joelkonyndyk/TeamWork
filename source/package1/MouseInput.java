@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-public class MouseInput1 implements MouseListener, MouseMotionListener {
+public class MouseInput implements MouseListener, MouseMotionListener {
 
 	private MainGame game;
 	private GameGUI gamePanel;
@@ -19,7 +19,7 @@ public class MouseInput1 implements MouseListener, MouseMotionListener {
 
 	private Point clickPoint;
 
-	public MouseInput1(final MainGame game, final GameGUI gamePanel) {
+	public MouseInput(final MainGame game, final GameGUI gamePanel) {
 		this.game = game;
 		this.gamePanel = gamePanel;
 
@@ -31,7 +31,6 @@ public class MouseInput1 implements MouseListener, MouseMotionListener {
 		// TODO Auto-generated method stub
 		// gamePanel.boardCleared();
 
-		System.out.println("New String");
 	}
 
 	public void mouseEntered(MouseEvent e) {
