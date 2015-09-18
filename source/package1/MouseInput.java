@@ -31,6 +31,7 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 		// TODO Auto-generated method stub
 		// gamePanel.boardCleared();
 
+		System.out.println("New String");
 	}
 
 	public void mouseEntered(MouseEvent e) {
