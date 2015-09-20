@@ -90,6 +90,7 @@ public class HeartsGame {
 
 		// Draws the test card on the screen
 		spriteTest = deck.getCard(0).getSprite().clone();
+		spriteTest.setPosition(175, 175);
 
 	}
 
@@ -182,17 +183,17 @@ public class HeartsGame {
 				passingCards = false;
 				System.out.println("Passing Cards Complete");
 
-				if (spriteTest.getBounds().contains(pointClicked)) {
-
-					// creates a new animation when the card is clicked
-					anim.createAnimation(new Animation(anim, spriteTest,
-							new Point(550, 300), 50));
-
-					// spriteTest.rotateImage90();
-					// spriteTest.setPosition(spriteTest.getX() + 10,
-					// spriteTest.getY());
-
-				}
+				// if (spriteTest.getBounds().contains(pointClicked)) {
+				//
+				// // creates a new animation when the card is clicked
+				// anim.createAnimation(new Animation(anim, spriteTest,
+				// new Point(550, 300), 50));
+				//
+				// // spriteTest.rotateImage90();
+				// // spriteTest.setPosition(spriteTest.getX() + 10,
+				// // spriteTest.getY());
+				//
+				// }
 
 				mouseClicked = false;
 				twoOfClubsStarts();
