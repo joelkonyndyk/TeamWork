@@ -31,6 +31,8 @@ public class HeartsGame {
 	// private Sprite cardBack;
 	private Sprite spriteTest;
 
+	private AnimationController anim;
+
 	SpriteSheet spriteSheet;
 
 	private boolean runGame = false;
@@ -45,6 +47,8 @@ public class HeartsGame {
 	public void init() {
 
 		names = new RandomName();
+
+		anim = new AnimationController();
 
 		deck.ShuffleDeck();
 
@@ -164,36 +168,51 @@ public class HeartsGame {
 				passingThreeCardsCounter = 0;
 				passingCards = false;
 				System.out.println("Passing Cards Complete");
-			}
 
-			mouseClicked = false;
-			twoOfClubsStarts();
-		}
+				if (spriteTest.getBounds().contains(pointClicked)) {
 
-		// Game play after cards have been passed
-		if (mouseClicked && player.isTurn() == true && passingCards == false) {
+					// creates a new animation when the card is clicked
+					anim.createAnimation(new Animation(anim, spriteTest,
+							new Point(550, 300), 50));
 
-			for (int i = 0; i < player.getHand().length; i++) {
-				if (player.getHand()[i].getSprite().getVisibleBounds(i)
-						.contains(pointClicked)
-						&& player.getHand()[i].getCardNumber() != -1) {
+					// spriteTest.rotateImage90();
+					// spriteTest.setPosition(spriteTest.getX() + 10,
+					// spriteTest.getY());
 
-					System.out.println(player.getHand()[i].getCardNumber());
-					System.out.println(player.isTurn());
-
-					// *********How do I make the cards reprint when I
-					// change
-					// how the sprite looks?*******
-					// comp1.getHand()[i].setShowBack(false);
-					// comp1.getHand()[i].getSprite().setPosition(400, 175);
 				}
 
+				mouseClicked = false;
+				twoOfClubsStarts();
 			}
 
-			mouseClicked = false;
-			player.setTurn(false);
+			// Game play after cards have been passed
+			if (mouseClicked && player.isTurn() == true
+					&& passingCards == false) {
 
+				for (int i = 0; i < player.getHand().length; i++) {
+					if (player.getHand()[i].getSprite().getVisibleBounds(i)
+							.contains(pointClicked)
+							&& player.getHand()[i].getCardNumber() != -1) {
+
+						System.out.println(player.getHand()[i].getCardNumber());
+						System.out.println(player.isTurn());
+
+						// *********How do I make the cards reprint when I
+						// change
+						// how the sprite looks?*******
+						// comp1.getHand()[i].setShowBack(false);
+						// comp1.getHand()[i].getSprite().setPosition(400, 175);
+					}
+
+				}
+
+				mouseClicked = false;
+				player.setTurn(false);
+
+			}
 		}
+		anim.tick();
+
 	}
 
 	public void render(Graphics2D g) {
@@ -230,6 +249,20 @@ public class HeartsGame {
 	public void mouseClicked(Point p) {
 		mouseClicked = true;
 		pointClicked = p;
+
+		// playing with drawing new cards
+
+		// System.out.println(player.getHand()[2].getCardNumber());
+
+		// System.out.println("");
+
+		player.setHand(0, 1);
+		player.setHand(1, 2);
+		player.setHand(3, 2);
+		player.setHand(4, 2);
+
+		// System.out.println(player.getHand()[2].getCardNumber());
+		// System.out.println(player.getHand()[2]);
 
 	}
 
