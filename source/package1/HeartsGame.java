@@ -140,6 +140,19 @@ public class HeartsGame {
 
 	public void tick() {
 
+		// used for testing purposes. Keep in code for now
+		if (mouseClicked) {
+
+			if (spriteTest.getBounds().contains(pointClicked)) {
+
+				// creates a new animation when the card is clicked
+				anim.createAnimation(new Animation(anim, spriteTest, new Point(
+						550, 300), 50));
+
+			}
+			mouseClicked = false;
+		}
+
 		// passingCards *select 3 cards* then turn off passing cards
 		if (mouseClicked && passingCards == true) {
 
