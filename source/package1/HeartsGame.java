@@ -113,7 +113,7 @@ public class HeartsGame {
 
 				// creates a new animation when the card is clicked
 				anim.createAnimation(new Animation(anim, spriteTest, new Point(
-						550, 300), 100));
+						550, 300), 50));
 
 				// spriteTest.rotateImage90();
 				// spriteTest.setPosition(spriteTest.getX() + 10,
