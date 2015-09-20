@@ -27,7 +27,7 @@ public class HeartsGame {
 	// private Sprite cardBack;
 	private Sprite spriteTest;
 
-	private Animation anim;
+	private AnimationController anim;
 
 	SpriteSheet spriteSheet;
 
@@ -44,7 +44,7 @@ public class HeartsGame {
 
 		names = new RandomName();
 
-		// anim = new Animation();
+		anim = new AnimationController();
 
 		deck.ShuffleDeck();
 
@@ -97,14 +97,6 @@ public class HeartsGame {
 
 	public void tick() {
 
-		// long startingTime = System.currentTimeMillis();
-		// long cumTime = startingTime;
-		//
-		// while(cumTime - startingTime < 5000) {
-		// long timePassed = System.currentTimeMillis() - cumTime;
-		// cumTime += timePassed;
-		// update(timePassed);
-
 		if (mouseClicked) {
 
 			for (int i = 0; i < player.getHand().length; i++) {
@@ -118,11 +110,10 @@ public class HeartsGame {
 			}
 
 			if (spriteTest.getBounds().contains(pointClicked)) {
-				
-				float i = ((float)32/7);
-				System.out.println(i);
 
-				// anim.addScene(spriteTest, 50);
+				// creates a new animation when the card is clicked
+				anim.createAnimation(new Animation(anim, spriteTest, new Point(
+						550, 300), 100));
 
 				// spriteTest.rotateImage90();
 				// spriteTest.setPosition(spriteTest.getX() + 10,
@@ -131,7 +122,7 @@ public class HeartsGame {
 			mouseClicked = false;
 		}
 
-		// anim.update(timePassed);
+		anim.tick();
 
 	}
 
@@ -173,17 +164,17 @@ public class HeartsGame {
 
 		// playing with drawing new cards
 
-//		System.out.println(player.getHand()[2].getCardNumber());
+		// System.out.println(player.getHand()[2].getCardNumber());
 
-//		System.out.println("");
+		// System.out.println("");
 
 		player.setHand(0, 1);
 		player.setHand(1, 2);
 		player.setHand(3, 2);
 		player.setHand(4, 2);
 
-//		System.out.println(player.getHand()[2].getCardNumber());
-//		System.out.println(player.getHand()[2]);
+		// System.out.println(player.getHand()[2].getCardNumber());
+		// System.out.println(player.getHand()[2]);
 
 	}
 

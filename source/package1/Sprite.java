@@ -25,11 +25,11 @@ public class Sprite implements Cloneable, Serializable {
 
 	private transient BufferedImage spriteImg;
 
-	private int x;
-	private int y;
+	private float x;
+	private float y;
 
-	private int refX;
-	private int refY;
+	private float refX;
+	private float refY;
 
 	// For serialization
 	private static final long serialVersionUID = 1L;
@@ -53,27 +53,28 @@ public class Sprite implements Cloneable, Serializable {
 	 * current frame.
 	 */
 	public void paint(Graphics g) {
-		g.drawImage(this.getImage(), this.getRealX(), this.getRealY(), null);
+		g.drawImage(this.getImage(), Math.round(this.getRealX()),
+				Math.round(this.getRealY()), null);
 	}
 
 	/*
 	 * Paints the original Sprite if setAnimation has been used
 	 */
 	public void paintOrig(Graphics g) {
-		g.drawImage(spriteImg, x, y, null);
+		g.drawImage(spriteImg, Math.round(x), Math.round(y), null);
 	}
 
 	/*
 	 * Sets the position based on the parameters
 	 */
-	public void setPosition(int x, int y) {
+	public void setPosition(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}
 
 	// Defines which reference pixel (i.e where the image will be placed on the
 	// x/y coordinates)
-	public void setRefPixel(int x, int y) {
+	public void setRefPixel(float x, float y) {
 		refX = x;
 		refY = y;
 	}
@@ -180,12 +181,13 @@ public class Sprite implements Cloneable, Serializable {
 		int[] pixels2 = new int[width * height];
 
 		// Create the pixelgrabber and fill the arrays
-		PixelGrabber pg1 = new PixelGrabber(getImage(),
-				cornerTopX - getRealX(), cornerTopY - getRealY(), width,
+		PixelGrabber pg1 = new PixelGrabber(getImage(), Math.round(cornerTopX
+				- getRealX()), Math.round(cornerTopY - getRealY()), width,
 				height, pixels1, 0, width);
-		PixelGrabber pg2 = new PixelGrabber(sprite.getImage(), cornerTopX
-				- sprite.getRealX(), cornerTopY - sprite.getRealY(), width,
-				height, pixels2, 0, width);
+		PixelGrabber pg2 = new PixelGrabber(sprite.getImage(),
+				Math.round(cornerTopX - sprite.getRealX()),
+				Math.round(cornerTopY - sprite.getRealY()), width, height,
+				pixels2, 0, width);
 
 		// Grab the pixels
 		try {
@@ -297,48 +299,48 @@ public class Sprite implements Cloneable, Serializable {
 	 * Returns the X-position of the sprite getRealX() returns the X-Position of
 	 * the Sprite's upper-left corner
 	 */
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 
-	public int getRefX() {
+	public float getRefX() {
 		return refX;
 	}
 
-	public int getRealX() {
-		return x - refX;
+	public float getRealX() {
+		return (x - refX);
 	}
 
 	/*
 	 * Returns the Y-position of the sprite getRealY() returns the Y-position of
 	 * the Sprite's upper-left corner
 	 */
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 
-	public int getRefY() {
+	public float getRefY() {
 		return refY;
 	}
 
-	public int getRealY() {
-		return y - refY;
+	public float getRealY() {
+		return (y - refY);
 	}
 
 	/*
 	 * Returns the boundaries for the sprite, used for collision detection
 	 */
 	public static Rectangle getBounds(Sprite sprite) {
-		return new Rectangle(sprite.getRealX(), sprite.getRealY(),
-				sprite.getWidth(), sprite.getHeight());
+		return new Rectangle(Math.round(sprite.getRealX()), Math.round(sprite
+				.getRealY()), sprite.getWidth(), sprite.getHeight());
 	}
 
 	/*
 	 * Returns the boundaries for this sprite, used for collision detection
 	 */
 	public Rectangle getBounds() {
-		return new Rectangle(this.getRealX(), this.getRealY(), this.getWidth(),
-				this.getHeight());
+		return new Rectangle(Math.round(this.getRealX()), Math.round(this
+				.getRealY()), this.getWidth(), this.getHeight());
 	}
 
 	/*

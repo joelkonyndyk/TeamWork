@@ -9,27 +9,11 @@ import java.util.LinkedList;
 
 public class Animation {
 
-	// private int originX;
-	// private int originY;
-	// private int destX;
-	// private int destY;
-	//
-	// private float currX;
-	// private float currY;
-	//
-	// // will need an origin, destination, and current degree/rotation
-	//
-	// private ArrayList scenes;
-	// private int sceneIndex;
-	// private long movieTime;
-	// private long totalTime;
-
-	// Variables for test animation class
-	private LinkedList<Sprite> animList = new LinkedList<Sprite>();
-
-	private StopWatch time = new StopWatch();
+	// private StopWatch time = new StopWatch();
 
 	private Sprite sprite;
+
+	private AnimationController animCont;
 
 	private int destX, destY;
 
@@ -39,14 +23,19 @@ public class Animation {
 	// increment to move per turn
 	private float incX, incY;
 
+	// Number of ticks animation will be (Shoud mabye be swapped in the future
+	// to actual time)
 	private int duration;
 
 	// Constructors
-	public Animation(Sprite s, Point destPt, int duration) {
+	public Animation(AnimationController ac, Sprite s, Point destPt,
+			int duration) {
 		sprite = s;
 
-		distX = Math.abs(destPt.x - s.getX());
-		distY = Math.abs(destPt.y - s.getY());
+		animCont = ac;
+
+		destX = destPt.x;
+		destY = destPt.y;
 
 		this.duration = duration;
 
@@ -56,11 +45,32 @@ public class Animation {
 	// Methods
 
 	public void init() {
+		distX = destX - sprite.getX();
+		distY = destY - sprite.getY();
+
 		incX = distX / duration;
 		incY = distY / duration;
 	}
 
 	public void tick() {
+
+		if (distX > Math.abs(incX)) {
+			sprite.setPosition(sprite.getX() + incX, sprite.getY());
+			distX -= Math.abs(incX);
+		} else {
+			sprite.setPosition(destX, sprite.getY());
+		}
+
+		if (distY > Math.abs(incY)) {
+			sprite.setPosition(sprite.getX(), sprite.getY() + incY);
+			distY -= Math.abs(incY);
+		} else {
+			sprite.setPosition(sprite.getX(), destY);
+		}
+
+		if (sprite.getX() == destX && sprite.getY() == destY) {
+			animCont.removeAnimation(this);
+		}
 
 	}
 
@@ -70,65 +80,4 @@ public class Animation {
 
 	// Getters and Setters
 
-	// public Animation() {
-	// scenes = new ArrayList();
-	// totalTime = 0;
-	// start();
-	// }
-	//
-	// // add scenes to the array list and set time for each scene
-	// public synchronized void addScene(Sprite sprite, long time, Point
-	// destPoint) {
-	// totalTime += time;
-	// scenes.add(new Onescene(sprite, totalTime, destPoint));
-	// }
-	//
-	// // start animation from beginning
-	// public synchronized void start() {
-	// movieTime = 0;
-	// sceneIndex = 0;
-	// }
-	//
-	// // change scenes
-	// public synchronized void update(long timePassed) {
-	//
-	// if (scenes.size() > 1) {
-	// movieTime += timePassed;
-	//
-	// if (movieTime >= totalTime) {
-	// movieTime = 0;
-	// sceneIndex = 0;
-	// }
-	// while (movieTime > getScene(sceneIndex).endTime) {
-	// sceneIndex++;
-	// }
-	// }
-	// }
-	//
-	// // get animations current scene
-	// public synchronized Image getImage() {
-	//
-	// if (scenes.size() == 0) {
-	// return null;
-	// }
-	//
-	// else {
-	// return getScene(sceneIndex).pic;
-	// }
-	// }
-	//
-	// // get scene
-	// private Onescene getScene(int x) {
-	// return (Onescene) scenes.get(x);
-	// }
-	//
-	// private class Onescene {
-	// Image pic;
-	// long endTime;
-	//
-	// public Onescene(Sprite sprite, long endTime) {
-	// pic = sprite.getImage();
-	// this.endTime = endTime;
-	// }
-	// }
 }
