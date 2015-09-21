@@ -22,6 +22,10 @@ public class Animation {
 
 	// increment to move per turn
 	private float incX, incY;
+	
+	private float incRotate;
+	
+	private float rotate = 0;
 
 	// Number of ticks animation will be (Shoud mabye be swapped in the future
 	// to actual time)
@@ -41,6 +45,21 @@ public class Animation {
 
 		init();
 	}
+	
+	public Animation(AnimationController ac, Sprite s, Point destPt, int rotate,
+			int duration) {
+		sprite = s;
+
+		animCont = ac;
+
+		destX = destPt.x;
+		destY = destPt.y;
+
+		this.duration = duration;		
+		this.rotate = rotate;
+
+		init();
+	}
 
 	// Methods
 
@@ -50,6 +69,11 @@ public class Animation {
 
 		incX = distX / duration;
 		incY = distY / duration;
+		
+		incRotate = rotate / duration;
+		
+		distX = Math.abs(distX);
+		distY = Math.abs(distY);
 	}
 
 	public void tick() {
@@ -70,6 +94,15 @@ public class Animation {
 
 		if (sprite.getX() == destX && sprite.getY() == destY) {
 			animCont.removeAnimation(this);
+		}
+		
+		//This is where the sprite gets rotated
+		if (rotate != 0){	
+//			System.out.println(rotate);
+//			System.out.println(incRotate);			
+			
+			sprite.rotateImage(incRotate);
+			rotate -= incRotate;			
 		}
 
 	}
