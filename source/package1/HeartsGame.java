@@ -121,10 +121,6 @@ public class HeartsGame {
 	
 	public void passLeft(){
 		
-		
-		
-		
-		
 	}
 
 	public void twoOfClubsStarts() {
@@ -141,12 +137,16 @@ public class HeartsGame {
 	}
 
 	public void tick() {
+		
+		
 
 		// passingCards *select 3 cards* then turn off passing cards
 		if (mouseClicked && passingCards == true) {
-
+			
 			for (int i = 0; i < player.getHand().length; i++) {
 
+		//may need to change the get visible bounds class later b/c
+		//only accounts for bounds when in a players hand
 				if (player.getHand()[i].getSprite().getVisibleBounds(i)
 						.contains(pointClicked)
 						&& passingThreeCardsCounter < 3) {
