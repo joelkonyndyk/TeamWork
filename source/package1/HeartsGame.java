@@ -101,21 +101,6 @@ public class HeartsGame {
 
 	}
 
-	// need to adjust this so it holds an index reference not a value
-	public void checkCardAlreadyPassed(Card card) {
-
-		for (int i = 0; i < 3; i++) {
-
-			if (cardsHaveBeenPassed[i] == card) {
-				passingThreeCardsCounter--;
-				i = 3;
-
-			}
-
-		}
-
-	}
-
 	public void addCardToAlreadyPassed(Card card) {
 		for (int i = 0; i < 3; i++) {
 			if (cardsHaveBeenPassed[i] == null
@@ -127,6 +112,11 @@ public class HeartsGame {
 
 			}
 
+			if(cardsHaveBeenPassed[i] == card){
+				passingThreeCardsCounter = i-1;
+				cardsHaveBeenPassed[i] = null;	
+				i=3;
+			}
 		}
 
 	}
@@ -143,33 +133,6 @@ public class HeartsGame {
 
 	// Checks to see who holds the 2 of clubs at the start of the game
 	public void twoOfClubsStarts() {
-
-		// System.out.println(player.getHand()[0].getSuit());
-		// System.out.println(player.getHand()[0].getCardNumber());
-		// System.out.println(player.getHand()[1].getSuit());
-		// System.out.println(player.getHand()[1].getCardNumber());
-		// System.out.println(player.getHand()[2].getSuit());
-		// System.out.println(player.getHand()[2].getCardNumber());
-		// System.out.println(player.getHand()[3].getSuit());
-		// System.out.println(player.getHand()[3].getCardNumber());
-		// System.out.println(player.getHand()[4].getSuit());
-		// System.out.println(player.getHand()[4].getCardNumber());
-		// System.out.println(player.getHand()[5].getSuit());
-		// System.out.println(player.getHand()[5].getCardNumber());
-		// System.out.println(player.getHand()[6].getSuit());
-		// System.out.println(player.getHand()[6].getCardNumber());
-		// System.out.println(player.getHand()[7].getSuit());
-		// System.out.println(player.getHand()[7].getCardNumber());
-		// System.out.println(player.getHand()[8].getSuit());
-		// System.out.println(player.getHand()[8].getCardNumber());
-		// System.out.println(player.getHand()[9].getSuit());
-		// System.out.println(player.getHand()[9].getCardNumber());
-		// System.out.println(player.getHand()[10].getSuit());
-		// System.out.println(player.getHand()[10].getCardNumber());
-		// System.out.println(player.getHand()[11].getSuit());
-		// System.out.println(player.getHand()[11].getCardNumber());
-		// System.out.println(player.getHand()[12].getSuit());
-		// System.out.println(player.getHand()[12].getCardNumber());
 
 		// for (int i = 0; i < 12; i++) {
 		// System.out.println("Checking for 2 of Clubs");
@@ -265,16 +228,16 @@ public class HeartsGame {
 							.contains(pointClicked)
 							&& passingThreeCardsCounter < 3) {
 
-						checkCardAlreadyPassed(player.getHand()[i]);
+//						checkCardAlreadyPassed(player.getHand()[i]);
 						addCardToAlreadyPassed(player.getHand()[i]);
 						passingThreeCardsCounter++;
 
-						// System.out.println(cardsHaveBeenPassed[0]);
-						// System.out.println(cardsHaveBeenPassed[1]);
-						// System.out.println(cardsHaveBeenPassed[2]);
-						//
-						// System.out.println(passingThreeCardsCounter
-						// + " Card Counter");
+						 System.out.println(cardsHaveBeenPassed[0]);
+						 System.out.println(cardsHaveBeenPassed[1]);
+						 System.out.println(cardsHaveBeenPassed[2]);
+						
+						 System.out.println(passingThreeCardsCounter
+						 + " Card Counter");
 					}
 				}
 
