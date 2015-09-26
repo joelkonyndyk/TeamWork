@@ -16,7 +16,7 @@ public class HeartsGame {
 	private boolean passingCards = true;
 	private int roundNumber = 1;
 	private int passingThreeCardsCounter = 0;
-	private int[] cardsHaveBeenPassed = { -1, -1, -1 };
+	private Card[] cardsHaveBeenPassed = { null, null, null };
 
 	private RandomName names;
 	private String plyrName = "JOEL";
@@ -97,12 +97,13 @@ public class HeartsGame {
 	public void run() {
 
 	}
-
-	// move these to the bottom when finished with game logic
-	public void checkCardAlreadyPassed(int z) {
+	
+	// need to adjust this so it holds an index reference not a value
+	public void checkCardAlreadyPassed(Card card) {
 
 		for (int i = 0; i < 3; i++) {
-			if (cardsHaveBeenPassed[i] == z) {
+			
+			if (cardsHaveBeenPassed[i] == card) {
 				passingThreeCardsCounter--;
 				i = 3;
 
@@ -112,12 +113,12 @@ public class HeartsGame {
 
 	}
 
-	public void addCardToAlreadyPassed(int z) {
+	public void addCardToAlreadyPassed(Card card) {
 		for (int i = 0; i < 3; i++) {
-			if (cardsHaveBeenPassed[i] == -1 && cardsHaveBeenPassed[0] != z
-					&& cardsHaveBeenPassed[1] != z
-					&& cardsHaveBeenPassed[2] != z) {
-				cardsHaveBeenPassed[i] = z;
+			if (cardsHaveBeenPassed[i] == null && cardsHaveBeenPassed[0] != card
+					&& cardsHaveBeenPassed[1] != card
+					&& cardsHaveBeenPassed[2] != card) {
+				cardsHaveBeenPassed[i] = card;
 				break;
 
 			}
@@ -125,72 +126,112 @@ public class HeartsGame {
 		}
 
 	}
+
+	//finish this after switching up all the other methods
 	
-	public void passLeft(){
-		
-	}
+//	Card tempCardHolder;
+//	
+//	public void passLeft(){
+//	
+//		player.getHand()[1] = tempCardHolder;
+//		
+//	}
 
+	//Checks to see who holds the 2 of clubs at the start of the game
 	public void twoOfClubsStarts() {
-		for (int i = 0; i < 12; i++) {
-			if (player.getHand()[i].getCardAndSuitNumber() == 6) {
-				player.setTurn(true);
-			} else if (comp1.getHand()[i].getCardAndSuitNumber() == 6) {
-				comp1.setTurn(true);
-			} else if (comp2.getHand()[i].getCardAndSuitNumber() == 6) {
-				comp2.setTurn(true);
-			} else {
-				comp3.setTurn(true);
-			}
+		
+		System.out.println(player.getHand()[0].getSuit());
+		System.out.println(player.getHand()[0].getCardNumber());
+		System.out.println(player.getHand()[1].getSuit());
+		System.out.println(player.getHand()[1].getCardNumber());
+		System.out.println(player.getHand()[2].getSuit());
+		System.out.println(player.getHand()[2].getCardNumber());
+		System.out.println(player.getHand()[3].getSuit());
+		System.out.println(player.getHand()[3].getCardNumber());
+		System.out.println(player.getHand()[4].getSuit());
+		System.out.println(player.getHand()[4].getCardNumber());
+		System.out.println(player.getHand()[5].getSuit());
+		System.out.println(player.getHand()[5].getCardNumber());
+		System.out.println(player.getHand()[6].getSuit());
+		System.out.println(player.getHand()[6].getCardNumber());
+		System.out.println(player.getHand()[7].getSuit());
+		System.out.println(player.getHand()[7].getCardNumber());
+		System.out.println(player.getHand()[8].getSuit());
+		System.out.println(player.getHand()[8].getCardNumber());
+		System.out.println(player.getHand()[9].getSuit());
+		System.out.println(player.getHand()[9].getCardNumber());
+		System.out.println(player.getHand()[10].getSuit());
+		System.out.println(player.getHand()[10].getCardNumber());
+		System.out.println(player.getHand()[11].getSuit());
+		System.out.println(player.getHand()[11].getCardNumber());
+		System.out.println(player.getHand()[12].getSuit());
+		System.out.println(player.getHand()[12].getCardNumber());
+		
+	
+//		for (int i = 0; i < 12; i++) {
+//			System.out.println("Checking for 2 of Clubs");
+//			if (player.getHand()[i].getSuitNumber() == 3 && player.getHand()[i].getCardNumber() == 2 ) {
+//				player.setTurn(true);
+//				System.out.println("P1");
+//			} else if (comp1.getHand()[i].getSuitNumber() == 3 && comp1.getHand()[i].getCardNumber() == 2) {
+//				comp1.setTurn(true);
+//				System.out.println("C1");
+//			} else if (comp2.getHand()[i].getSuitNumber() == 3 && comp1.getHand()[i].getCardNumber() == 2) {
+//				comp2.setTurn(true);
+//				System.out.println("C2");
+//			} else if (comp3.getHand()[i].getSuitNumber() == 3 && comp1.getHand()[i].getCardNumber() == 2){
+//				comp3.setTurn(true);
+//				System.out.println("C3");
+//
+//			}
 
-		}
+//		}
 	}
 
 	public void tick() {
-		
-		
-
-		// used for testing purposes. Keep in code for now
-		if (mouseClicked) {
-
-			if (spriteTest.getBounds().contains(pointClicked)) {
-
-				// creates a new animation when the card is clicked
-				if (spriteTest.getX() == 175 && spriteTest.getY() == 175) {
-					anim.createAnimation(new Animation(anim, spriteTest,
-							new Point(550, 300), 100));
-				} else if (spriteTest.getX() == 550 && spriteTest.getY() == 300) {
-					// anim.createAnimation(new Animation(anim, spriteTest,
-					// new Point(175, 175), 90, 50));
-
-					anim.createAnimation(new Animation(anim, spriteTest,
-							new Point(175, 175), 50));
-				}
-
-			}
-
-			// This for loop allows the player to animate the cards in their
-			// hand
-			for (int i = 0; i < player.getHand().length; i++) {
-				if (player.getHand()[i].getSprite().getVisibleBounds(i)
-						.contains(pointClicked)) {
-
-					if (player.getHand()[i].getSprite().getY() == 445) {
-						anim.createAnimation(new Animation(anim, player
-								.getHand()[i].getSprite(), new Point(Math
-								.round(player.getHand()[i].getSprite().getX()),
-								400), 25));
-					} else if (Math.round(player.getHand()[i].getSprite()
-							.getY()) == 400) {
-						anim.createAnimation(new Animation(anim, player
-								.getHand()[i].getSprite(), new Point(Math
-								.round(player.getHand()[i].getSprite().getX()),
-								445), 25));
-					}
-
-				}
-			}
-			mouseClicked = false;
-		}
+//		
+//		// used for testing purposes. Keep in code for now
+//		if (mouseClicked) {
+//			
+//			if (spriteTest.getBounds().contains(pointClicked)) {
+//
+//				// creates a new animation when the card is clicked
+//				if (spriteTest.getX() == 175 && spriteTest.getY() == 175) {
+//					anim.createAnimation(new Animation(anim, spriteTest,
+//							new Point(550, 300), 100));
+//				} else if (spriteTest.getX() == 550 && spriteTest.getY() == 300) {
+//					// anim.createAnimation(new Animation(anim, spriteTest,
+//					// new Point(175, 175), 90, 50));
+//
+//					anim.createAnimation(new Animation(anim, spriteTest,
+//							new Point(175, 175), 50));
+//				}
+//
+//			}
+//
+//			// This for loop allows the player to animate the cards in their
+//			// hand
+//			for (int i = 0; i < player.getHand().length; i++) {
+//				if (player.getHand()[i].getSprite().getVisibleBounds(i)
+//						.contains(pointClicked)) {
+//
+//					if (player.getHand()[i].getSprite().getY() == 445) {
+//						anim.createAnimation(new Animation(anim, player
+//								.getHand()[i].getSprite(), new Point(Math
+//								.round(player.getHand()[i].getSprite().getX()),
+//								400), 25));
+//					} else if (Math.round(player.getHand()[i].getSprite()
+//							.getY()) == 400) {
+//						anim.createAnimation(new Animation(anim, player
+//								.getHand()[i].getSprite(), new Point(Math
+//								.round(player.getHand()[i].getSprite().getX()),
+//								445), 25));
+//					}
+//
+//				}
+//			}
+//			mouseClicked = false;
+//		}
 
 		// passingCards *select 3 cards* then turn off passing cards
 		if (mouseClicked && passingCards == true) {
@@ -204,9 +245,9 @@ public class HeartsGame {
 						&& passingThreeCardsCounter < 3) {
 
 					checkCardAlreadyPassed(player.getHand()[i]
-							.getCardAndSuitNumber());
+							);
 					addCardToAlreadyPassed(player.getHand()[i]
-							.getCardAndSuitNumber());
+							);
 					passingThreeCardsCounter++;
 
 					System.out.println(cardsHaveBeenPassed[0]);
@@ -303,20 +344,6 @@ public class HeartsGame {
 	public void mouseClicked(Point p) {
 		mouseClicked = true;
 		pointClicked = p;
-
-		// playing with drawing new cards
-
-		// System.out.println(player.getHand()[2].getCardNumber());
-
-		// System.out.println("");
-
-		player.setHand(0, 1);
-		player.setHand(1, 2);
-		player.setHand(3, 2);
-		player.setHand(4, 2);
-
-		// System.out.println(player.getHand()[2].getCardNumber());
-		// System.out.println(player.getHand()[2]);
 
 	}
 

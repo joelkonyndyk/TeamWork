@@ -73,13 +73,10 @@ public class Player {
 	public Card[] getHand() {
 		return hand;
 	}
+
 	
 	public int[] getP1CardLocX(){
 		return playerHandPositionX;
-	}
-	
-	public void setHand(int currentCardIndex, int desiredCardIndex){
-		hand[currentCardIndex] = hand[desiredCardIndex];
 	}
 
 	public boolean isTurn() {
@@ -88,5 +85,9 @@ public class Player {
 
 	public void setTurn(boolean isTurn) {
 		this.isTurn = isTurn;
+	}
+	
+	public void setHand(Card card, int cardIndexToPass){
+		this.hand[cardIndexToPass] = card;
 	}
 }
