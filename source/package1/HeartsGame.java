@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.Random;
 
 public class HeartsGame {
 	// This is where we will create the Hearts game logic
@@ -30,12 +31,17 @@ public class HeartsGame {
 	// private Sprite sprite;
 	// private Sprite cardBack;
 	private Sprite spriteTest;
+	private Sprite spriteTest1;
 
 	private AnimationController anim;
+
+	private Random rand = new Random();
 
 	SpriteSheet spriteSheet;
 
 	private boolean runGame = false;
+
+	private boolean compHandSelected = false;
 
 	Font font;
 
@@ -67,7 +73,7 @@ public class HeartsGame {
 		// Sets the location of the cards in the players hand
 		int location = 100;
 		int locationTop = 280;
-		int locationSides = 80;
+		int locationSides = 70;
 
 		player.sortHand();
 
@@ -79,9 +85,9 @@ public class HeartsGame {
 			comp1.getHand()[i].getSprite().setPosition(30, locationSides);
 			comp3.getHand()[i].getSprite().setPosition(780, locationSides);
 
-			comp1.getHand()[i].setShowBack(true);
-			comp2.getHand()[i].setShowBack(true);
-			comp3.getHand()[i].setShowBack(true);
+			// comp1.getHand()[i].setShowBack(true);
+			// comp2.getHand()[i].setShowBack(true);
+			// comp3.getHand()[i].setShowBack(true);
 
 			location += 50;
 			locationTop += 20;
@@ -91,31 +97,19 @@ public class HeartsGame {
 		// Draws the test card on the screen
 		spriteTest = deck.getCard(0).getSprite().clone();
 		spriteTest.setPosition(175, 175);
+		spriteTest1 = deck.getCard(1).getSprite().clone();
+		spriteTest1.setPosition(200, 200);
 
 	}
 
 	public void run() {
 
 	}
-	
-	// need to adjust this so it holds an index reference not a value
-	public void checkCardAlreadyPassed(Card card) {
-
-		for (int i = 0; i < 3; i++) {
-			
-			if (cardsHaveBeenPassed[i] == card) {
-				passingThreeCardsCounter--;
-				i = 3;
-
-			}
-
-		}
-
-	}
 
 	public void addCardToAlreadyPassed(Card card) {
 		for (int i = 0; i < 3; i++) {
-			if (cardsHaveBeenPassed[i] == null && cardsHaveBeenPassed[0] != card
+			if (cardsHaveBeenPassed[i] == null
+					&& cardsHaveBeenPassed[0] != card
 					&& cardsHaveBeenPassed[1] != card
 					&& cardsHaveBeenPassed[2] != card) {
 				cardsHaveBeenPassed[i] = card;
@@ -123,23 +117,28 @@ public class HeartsGame {
 
 			}
 
+			if (cardsHaveBeenPassed[i] == card) {
+				passingThreeCardsCounter = i - 1;
+				cardsHaveBeenPassed[i] = null;
+				i = 3;
+			}
 		}
 
 	}
 
-	//finish this after switching up all the other methods
-	
-//	Card tempCardHolder;
-//	
-//	public void passLeft(){
-//	
-//		player.getHand()[1] = tempCardHolder;
-//		
-//	}
+	// finish this after switching up all the other methods
 
-	//Checks to see who holds the 2 of clubs at the start of the game
+	// Card tempCardHolder;
+	//
+	// public void passLeft(){
+	//
+	// player.getHand()[1] = tempCardHolder;
+	//
+	// }
+
+	// Checks to see who holds the 2 of clubs at the start of the game
 	public void twoOfClubsStarts() {
-		
+
 		System.out.println(player.getHand()[0].getSuit());
 		System.out.println(player.getHand()[0].getCardNumber());
 		System.out.println(player.getHand()[1].getSuit());
@@ -166,144 +165,170 @@ public class HeartsGame {
 		System.out.println(player.getHand()[11].getCardNumber());
 		System.out.println(player.getHand()[12].getSuit());
 		System.out.println(player.getHand()[12].getCardNumber());
-		
-	
-//		for (int i = 0; i < 12; i++) {
-//			System.out.println("Checking for 2 of Clubs");
-//			if (player.getHand()[i].getSuitNumber() == 3 && player.getHand()[i].getCardNumber() == 2 ) {
-//				player.setTurn(true);
-//				System.out.println("P1");
-//			} else if (comp1.getHand()[i].getSuitNumber() == 3 && comp1.getHand()[i].getCardNumber() == 2) {
-//				comp1.setTurn(true);
-//				System.out.println("C1");
-//			} else if (comp2.getHand()[i].getSuitNumber() == 3 && comp1.getHand()[i].getCardNumber() == 2) {
-//				comp2.setTurn(true);
-//				System.out.println("C2");
-//			} else if (comp3.getHand()[i].getSuitNumber() == 3 && comp1.getHand()[i].getCardNumber() == 2){
-//				comp3.setTurn(true);
-//				System.out.println("C3");
-//
-//			}
 
-//		}
+		// for (int i = 0; i < 12; i++) {
+		// System.out.println("Checking for 2 of Clubs");
+		// if (player.getHand()[i].getSuitNumber() == 3 &&
+		// player.getHand()[i].getCardNumber() == 2 ) {
+		// player.setTurn(true);
+		// System.out.println("P1");
+		// } else if (comp1.getHand()[i].getSuitNumber() == 3 &&
+		// comp1.getHand()[i].getCardNumber() == 2) {
+		// comp1.setTurn(true);
+		// System.out.println("C1");
+		// } else if (comp2.getHand()[i].getSuitNumber() == 3 &&
+		// comp1.getHand()[i].getCardNumber() == 2) {
+		// comp2.setTurn(true);
+		// System.out.println("C2");
+		// } else if (comp3.getHand()[i].getSuitNumber() == 3 &&
+		// comp1.getHand()[i].getCardNumber() == 2){
+		// comp3.setTurn(true);
+		// System.out.println("C3");
+		//
+		// }
+
+		// }
 	}
 
 	public void tick() {
-		
+
 		// used for testing purposes. Keep in code for now
 		if (mouseClicked) {
-			
+
 			if (spriteTest.getBounds().contains(pointClicked)) {
-
-				// creates a new animation when the card is clicked
-				if (spriteTest.getX() == 175 && spriteTest.getY() == 175) {
-					anim.createAnimation(new Animation(anim, spriteTest,
-							new Point(550, 300), 100));
-				} else if (spriteTest.getX() == 550 && spriteTest.getY() == 300) {
-					// anim.createAnimation(new Animation(anim, spriteTest,
-					// new Point(175, 175), 90, 50));
-
-					anim.createAnimation(new Animation(anim, spriteTest,
-							new Point(175, 175), 50));
+				if (!spriteTest1.getBounds().contains(pointClicked)) {
+					// creates a new animation when the card is clicked
+					if (spriteTest.getX() == 175 && spriteTest.getY() == 175) {
+						anim.createAnimation(new Animation(anim, spriteTest,
+								new Point(550, 300), 100));
+					} else if (spriteTest.getX() == 550
+							&& spriteTest.getY() == 300) {
+						anim.createAnimation(new Animation(anim, spriteTest,
+								new Point(175, 175), 50));
+					}
 				}
-
+			}
+			if (spriteTest1.getBounds().contains(pointClicked)) {
+				// creates a new animation when the card is clicked
+				if (spriteTest1.getX() == 200 && spriteTest1.getY() == 200) {
+					anim.createAnimation(new Animation(anim, spriteTest1,
+							new Point(575, 325), 100));
+				} else if (spriteTest1.getX() == 575
+						&& spriteTest1.getY() == 325) {
+					anim.createAnimation(new Animation(anim, spriteTest1,
+							new Point(200, 200), 50));
+				}
 			}
 
 			// This for loop allows the player to animate the cards in their
 			// hand
 			for (int i = 0; i < player.getHand().length; i++) {
-				if (player.getHand()[i].getSprite().getVisibleBounds(i)
+
+				// Makes click only apply to the visible part of the card
+				// clicked
+				if (player.getHand()[i].getSprite().getBounds()
 						.contains(pointClicked)) {
-
-					if (player.getHand()[i].getSprite().getY() == 445) {
-						anim.createAnimation(new Animation(anim, player
-								.getHand()[i].getSprite(), new Point(Math
-								.round(player.getHand()[i].getSprite().getX()),
-								400), 25));
-					} else if (Math.round(player.getHand()[i].getSprite()
-							.getY()) == 400) {
-						anim.createAnimation(new Animation(anim, player
-								.getHand()[i].getSprite(), new Point(Math
-								.round(player.getHand()[i].getSprite().getX()),
-								445), 25));
+					if (i + 1 < player.getHand().length
+							&& player.getHand()[i + 1].getSprite().getBounds()
+									.contains(pointClicked)) {
+					} else {
+						// Animates the cards up and down accordingly
+						if (player.getHand()[i].getSprite().getY() == 445) {
+							anim.createAnimation(new Animation(anim, player
+									.getHand()[i].getSprite(), new Point(Math
+									.round(player.getHand()[i].getSprite()
+											.getX()), 415), 10));
+						} else if (Math.round(player.getHand()[i].getSprite()
+								.getY()) == 415) {
+							anim.createAnimation(new Animation(anim, player
+									.getHand()[i].getSprite(), new Point(Math
+									.round(player.getHand()[i].getSprite()
+											.getX()), 445), 10));
+						}
 					}
-
-				}
-			}
-			mouseClicked = false;
-		}
-
-		// passingCards *select 3 cards* then turn off passing cards
-		if (mouseClicked && passingCards == true) {
-			
-			for (int i = 0; i < player.getHand().length; i++) {
-
-		//may need to change the get visible bounds class later b/c
-		//only accounts for bounds when in a players hand
-				if (player.getHand()[i].getSprite().getVisibleBounds(i)
-						.contains(pointClicked)
-						&& passingThreeCardsCounter < 3) {
-
-					checkCardAlreadyPassed(player.getHand()[i]
-							);
-					addCardToAlreadyPassed(player.getHand()[i]
-							);
-					passingThreeCardsCounter++;
-
-					System.out.println(cardsHaveBeenPassed[0]);
-					System.out.println(cardsHaveBeenPassed[1]);
-					System.out.println(cardsHaveBeenPassed[2]);
-
-					System.out.println(passingThreeCardsCounter
-							+ " Card Counter");
 				}
 			}
 
-			if (passingThreeCardsCounter == 3) {
-				passingThreeCardsCounter = 0;
-				passingCards = false;
-				System.out.println("Passing Cards Complete");
+			// passingCards *select 3 cards* then turn off passing cards
+			if (passingCards) {
 
-				// if (spriteTest.getBounds().contains(pointClicked)) {
+				for (int i = 0; i < player.getHand().length; i++) {
+
+					// may need to change the get visible bounds class later b/c
+					// only accounts for bounds when in a players hand
+					if (player.getHand()[i].getSprite().getVisibleBounds(i)
+							.contains(pointClicked)
+							&& passingThreeCardsCounter < 3) {
+
+						// checkCardAlreadyPassed(player.getHand()[i]);
+						addCardToAlreadyPassed(player.getHand()[i]);
+						passingThreeCardsCounter++;
+
+						System.out.println(cardsHaveBeenPassed[0]);
+						System.out.println(cardsHaveBeenPassed[1]);
+						System.out.println(cardsHaveBeenPassed[2]);
+
+						System.out.println(passingThreeCardsCounter
+								+ " Card Counter");
+					}
+				}
+
+				if (passingThreeCardsCounter == 3) {
+					passingThreeCardsCounter = 0;
+					passingCards = false;
+					System.out.println("Passing Cards Complete");
+
+					// if (spriteTest.getBounds().contains(pointClicked)) {
+					//
+					// // creates a new animation when the card is clicked
+					// anim.createAnimation(new Animation(anim, spriteTest,
+					// new Point(550, 300), 50));
+					//
+					// // spriteTest.rotateImage90();
+					// // spriteTest.setPosition(spriteTest.getX() + 10,
+					// // spriteTest.getY());
+					//
+					// }
+
+					mouseClicked = false;
+					twoOfClubsStarts();
+				}
+			}
+
+			// Game play after cards have been passed
+			if (player.isTurn() && !passingCards) {
+
+				// for (int i = 0; i < player.getHand().length; i++) {
+				// if (player.getHand()[i].getSprite().getVisibleBounds(i)
+				// .contains(pointClicked)
+				// && player.getHand()[i].getCardNumber() != -1) {
 				//
-				// // creates a new animation when the card is clicked
-				// anim.createAnimation(new Animation(anim, spriteTest,
-				// new Point(550, 300), 50));
+				// System.out.println(player.getHand()[i].getCardNumber());
+				// System.out.println(player.isTurn());
 				//
-				// // spriteTest.rotateImage90();
-				// // spriteTest.setPosition(spriteTest.getX() + 10,
-				// // spriteTest.getY());
+				// // *********How do I make the cards reprint when I
+				// // change
+				// // how the sprite looks?*******
+				// // comp1.getHand()[i].setShowBack(false);
+				// // comp1.getHand()[i].getSprite().setPosition(400, 175);
+				// }
 				//
 				// }
-
-				mouseClicked = false;
-				twoOfClubsStarts();
-			}
-		}
-
-		// Game play after cards have been passed
-		if (mouseClicked && player.isTurn() == true && passingCards == false) {
-
-			for (int i = 0; i < player.getHand().length; i++) {
-				if (player.getHand()[i].getSprite().getVisibleBounds(i)
-						.contains(pointClicked)
-						&& player.getHand()[i].getCardNumber() != -1) {
-
-					System.out.println(player.getHand()[i].getCardNumber());
-					System.out.println(player.isTurn());
-
-					// *********How do I make the cards reprint when I
-					// change
-					// how the sprite looks?*******
-					// comp1.getHand()[i].setShowBack(false);
-					// comp1.getHand()[i].getSprite().setPosition(400, 175);
-				}
+				//
+				// mouseClicked = false;
+				// player.setTurn(false);
 
 			}
 
 			mouseClicked = false;
-			player.setTurn(false);
+		}
 
+		// Create if statement here to detect if it is the beginning of a
+		// passing round
+		// if it is select 3 cards from the computers hands and animate them
+		if (!compHandSelected) {
+			selectComputerCards();
+			compHandSelected = true;
 		}
 
 		anim.tick();
@@ -316,17 +341,73 @@ public class HeartsGame {
 
 		// Draws the players names on the screen
 		DrawOutline(player.getName(), 280, 410, g);
-		DrawOutline(comp1.getName(), 30, 70, g);
+		DrawOutline(comp1.getName(), 30, 60, g);
 		DrawOutline(comp2.getName(), 280, 20, g);
-		DrawOutline(comp3.getName(), 780, 70, g);
+		DrawOutline(comp3.getName(), 780, 60, g);
 
+		// Draws the test cards on the screen
 		spriteTest.paint(g);
+		spriteTest1.paint(g);
+
+		// spriteTest.getImage()
 
 		for (int i = 0; i < player.getHand().length; i++) {
 			player.getHand()[i].getSprite().paint(g);
 			comp1.getHand()[i].getSprite().paint(g);
 			comp2.getHand()[i].getSprite().paint(g);
 			comp3.getHand()[i].getSprite().paint(g);
+		}
+	}
+
+	// will have to switch from using random cards to using selected ones
+	public void selectComputerCards() {
+
+		for (int i = 0; i < 3; i++) {
+			int max = 12;
+			int min = 0;
+			int randNum = rand.nextInt((max - min) + 1) + min;
+			int randNum1 = rand.nextInt((max - min) + 1) + min;
+			while (randNum == randNum1) {
+				randNum1 = rand.nextInt((max - min) + 1) + min;
+			}
+			int randNum2 = rand.nextInt((max - min) + 1) + min;
+			while (randNum2 == randNum || randNum2 == randNum1) {
+				randNum2 = rand.nextInt((max - min) + 1) + min;
+			}
+
+			ComputerPlayer temp;
+			temp = comp1;
+			int x = 50;
+			int x1 = 50;
+			int x2 = 50;
+			int y = (int) temp.getHand()[randNum].getSprite().getY();
+			int y1 = (int) temp.getHand()[randNum1].getSprite().getY();
+			int y2 = (int) temp.getHand()[randNum2].getSprite().getY();
+			if (i == 1) {
+				temp = comp2;
+				x = (int) temp.getHand()[randNum].getSprite().getX();
+				x1 = (int) temp.getHand()[randNum1].getSprite().getX();
+				x2 = (int) temp.getHand()[randNum2].getSprite().getX();
+				y = 50;
+				y1 = 50;
+				y2 = 50;
+			} else if (i == 2) {
+				temp = comp3;
+				x = 760;
+				x1 = 760;
+				x2 = 760;
+				y = (int) temp.getHand()[randNum].getSprite().getY();
+				y1 = (int) temp.getHand()[randNum1].getSprite().getY();
+				y2 = (int) temp.getHand()[randNum2].getSprite().getY();
+			}
+
+			// select 3 cards for the computer player
+			anim.createAnimation(new Animation(anim, temp.getHand()[randNum]
+					.getSprite(), new Point(x, y), 30));
+			anim.createAnimation(new Animation(anim, temp.getHand()[randNum1]
+					.getSprite(), new Point(x1, y1), 30));
+			anim.createAnimation(new Animation(anim, temp.getHand()[randNum2]
+					.getSprite(), new Point(x2, y2), 30));
 		}
 	}
 
