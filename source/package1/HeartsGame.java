@@ -189,49 +189,49 @@ public class HeartsGame {
 	}
 
 	public void tick() {
-//		
-//		// used for testing purposes. Keep in code for now
-//		if (mouseClicked) {
-//			
-//			if (spriteTest.getBounds().contains(pointClicked)) {
-//
-//				// creates a new animation when the card is clicked
-//				if (spriteTest.getX() == 175 && spriteTest.getY() == 175) {
-//					anim.createAnimation(new Animation(anim, spriteTest,
-//							new Point(550, 300), 100));
-//				} else if (spriteTest.getX() == 550 && spriteTest.getY() == 300) {
-//					// anim.createAnimation(new Animation(anim, spriteTest,
-//					// new Point(175, 175), 90, 50));
-//
-//					anim.createAnimation(new Animation(anim, spriteTest,
-//							new Point(175, 175), 50));
-//				}
-//
-//			}
-//
-//			// This for loop allows the player to animate the cards in their
-//			// hand
-//			for (int i = 0; i < player.getHand().length; i++) {
-//				if (player.getHand()[i].getSprite().getVisibleBounds(i)
-//						.contains(pointClicked)) {
-//
-//					if (player.getHand()[i].getSprite().getY() == 445) {
-//						anim.createAnimation(new Animation(anim, player
-//								.getHand()[i].getSprite(), new Point(Math
-//								.round(player.getHand()[i].getSprite().getX()),
-//								400), 25));
-//					} else if (Math.round(player.getHand()[i].getSprite()
-//							.getY()) == 400) {
-//						anim.createAnimation(new Animation(anim, player
-//								.getHand()[i].getSprite(), new Point(Math
-//								.round(player.getHand()[i].getSprite().getX()),
-//								445), 25));
-//					}
-//
-//				}
-//			}
-//			mouseClicked = false;
-//		}
+		
+		// used for testing purposes. Keep in code for now
+		if (mouseClicked) {
+			
+			if (spriteTest.getBounds().contains(pointClicked)) {
+
+				// creates a new animation when the card is clicked
+				if (spriteTest.getX() == 175 && spriteTest.getY() == 175) {
+					anim.createAnimation(new Animation(anim, spriteTest,
+							new Point(550, 300), 100));
+				} else if (spriteTest.getX() == 550 && spriteTest.getY() == 300) {
+					// anim.createAnimation(new Animation(anim, spriteTest,
+					// new Point(175, 175), 90, 50));
+
+					anim.createAnimation(new Animation(anim, spriteTest,
+							new Point(175, 175), 50));
+				}
+
+			}
+
+			// This for loop allows the player to animate the cards in their
+			// hand
+			for (int i = 0; i < player.getHand().length; i++) {
+				if (player.getHand()[i].getSprite().getVisibleBounds(i)
+						.contains(pointClicked)) {
+
+					if (player.getHand()[i].getSprite().getY() == 445) {
+						anim.createAnimation(new Animation(anim, player
+								.getHand()[i].getSprite(), new Point(Math
+								.round(player.getHand()[i].getSprite().getX()),
+								400), 25));
+					} else if (Math.round(player.getHand()[i].getSprite()
+							.getY()) == 400) {
+						anim.createAnimation(new Animation(anim, player
+								.getHand()[i].getSprite(), new Point(Math
+								.round(player.getHand()[i].getSprite().getX()),
+								445), 25));
+					}
+
+				}
+			}
+			mouseClicked = false;
+		}
 
 		// passingCards *select 3 cards* then turn off passing cards
 		if (mouseClicked && passingCards == true) {

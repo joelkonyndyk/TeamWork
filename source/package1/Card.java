@@ -50,13 +50,13 @@ public class Card {
 
 	public void checkSuit() {
 		if (suitNumber == 1) {
-			suit = "spade";
-		} else if (suitNumber == 2) {
 			suit = "heart";
+		} else if (suitNumber == 2) {
+			suit = "diamond";
 		} else if (suitNumber == 3) {
 			suit = "club";
 		} else if (suitNumber == 4) {
-			suit = "diamond";
+			suit = "spade";
 		}
 	}
 
