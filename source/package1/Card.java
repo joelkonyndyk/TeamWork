@@ -35,11 +35,11 @@ public class Card {
 		this.cardNumber = cardNumber;
 		this.suit = suit;
 
-		if (suit == "heart") {
+		if (suit == "diamond") {
 			suitNumber = 1;
-		} else if (suit == "diamond") {
-			suitNumber = 2;
 		} else if (suit == "club") {
+			suitNumber = 2;
+		} else if (suit == "heart") {
 			suitNumber = 3;
 		} else if (suit == "spade") {
 			suitNumber = 4;
@@ -50,11 +50,11 @@ public class Card {
 
 	public void checkSuit() {
 		if (suitNumber == 1) {
-			suit = "heart";
-		} else if (suitNumber == 2) {
 			suit = "diamond";
-		} else if (suitNumber == 3) {
+		} else if (suitNumber == 2) {
 			suit = "club";
+		} else if (suitNumber == 3) {
+			suit = "heart";
 		} else if (suitNumber == 4) {
 			suit = "spade";
 		}
@@ -63,7 +63,7 @@ public class Card {
 	// ///////////////////
 	// Getters and Setters
 	// ////////////////////
-	
+
 	public int getCardNumber() {
 		return this.cardNumber;
 	}
@@ -71,8 +71,8 @@ public class Card {
 	public int getSuitNumber() {
 		return this.suitNumber;
 	}
-	
-	public int getCardAndSuitNumber(){
+
+	public int getCardAndSuitNumber() {
 		return this.suitNumber * this.cardNumber;
 	}
 

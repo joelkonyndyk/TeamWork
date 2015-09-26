@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.Random;
 
 public class HeartsGame {
 	// This is where we will create the Hearts game logic
@@ -34,9 +35,13 @@ public class HeartsGame {
 
 	private AnimationController anim;
 
+	private Random rand = new Random();
+
 	SpriteSheet spriteSheet;
 
 	private boolean runGame = false;
+
+	private boolean compHandSelected = false;
 
 	Font font;
 
@@ -144,32 +149,32 @@ public class HeartsGame {
 	// Checks to see who holds the 2 of clubs at the start of the game
 	public void twoOfClubsStarts() {
 
-		// System.out.println(player.getHand()[0].getSuit());
-		// System.out.println(player.getHand()[0].getCardNumber());
-		// System.out.println(player.getHand()[1].getSuit());
-		// System.out.println(player.getHand()[1].getCardNumber());
-		// System.out.println(player.getHand()[2].getSuit());
-		// System.out.println(player.getHand()[2].getCardNumber());
-		// System.out.println(player.getHand()[3].getSuit());
-		// System.out.println(player.getHand()[3].getCardNumber());
-		// System.out.println(player.getHand()[4].getSuit());
-		// System.out.println(player.getHand()[4].getCardNumber());
-		// System.out.println(player.getHand()[5].getSuit());
-		// System.out.println(player.getHand()[5].getCardNumber());
-		// System.out.println(player.getHand()[6].getSuit());
-		// System.out.println(player.getHand()[6].getCardNumber());
-		// System.out.println(player.getHand()[7].getSuit());
-		// System.out.println(player.getHand()[7].getCardNumber());
-		// System.out.println(player.getHand()[8].getSuit());
-		// System.out.println(player.getHand()[8].getCardNumber());
-		// System.out.println(player.getHand()[9].getSuit());
-		// System.out.println(player.getHand()[9].getCardNumber());
-		// System.out.println(player.getHand()[10].getSuit());
-		// System.out.println(player.getHand()[10].getCardNumber());
-		// System.out.println(player.getHand()[11].getSuit());
-		// System.out.println(player.getHand()[11].getCardNumber());
-		// System.out.println(player.getHand()[12].getSuit());
-		// System.out.println(player.getHand()[12].getCardNumber());
+		System.out.println(player.getHand()[0].getSuit());
+		System.out.println(player.getHand()[0].getCardNumber());
+		System.out.println(player.getHand()[1].getSuit());
+		System.out.println(player.getHand()[1].getCardNumber());
+		System.out.println(player.getHand()[2].getSuit());
+		System.out.println(player.getHand()[2].getCardNumber());
+		System.out.println(player.getHand()[3].getSuit());
+		System.out.println(player.getHand()[3].getCardNumber());
+		System.out.println(player.getHand()[4].getSuit());
+		System.out.println(player.getHand()[4].getCardNumber());
+		System.out.println(player.getHand()[5].getSuit());
+		System.out.println(player.getHand()[5].getCardNumber());
+		System.out.println(player.getHand()[6].getSuit());
+		System.out.println(player.getHand()[6].getCardNumber());
+		System.out.println(player.getHand()[7].getSuit());
+		System.out.println(player.getHand()[7].getCardNumber());
+		System.out.println(player.getHand()[8].getSuit());
+		System.out.println(player.getHand()[8].getCardNumber());
+		System.out.println(player.getHand()[9].getSuit());
+		System.out.println(player.getHand()[9].getCardNumber());
+		System.out.println(player.getHand()[10].getSuit());
+		System.out.println(player.getHand()[10].getCardNumber());
+		System.out.println(player.getHand()[11].getSuit());
+		System.out.println(player.getHand()[11].getCardNumber());
+		System.out.println(player.getHand()[12].getSuit());
+		System.out.println(player.getHand()[12].getCardNumber());
 
 		// for (int i = 0; i < 12; i++) {
 		// System.out.println("Checking for 2 of Clubs");
@@ -328,6 +333,14 @@ public class HeartsGame {
 			mouseClicked = false;
 		}
 
+		// Create if statement here to detect if it is the beginning of a
+		// passing round
+		// if it is select 3 cards from the computers hands and animate them
+		if (!compHandSelected) {
+			selectComputerCards();
+			compHandSelected = true;
+		}
+
 		anim.tick();
 
 	}
@@ -353,6 +366,58 @@ public class HeartsGame {
 			comp1.getHand()[i].getSprite().paint(g);
 			comp2.getHand()[i].getSprite().paint(g);
 			comp3.getHand()[i].getSprite().paint(g);
+		}
+	}
+
+	// will have to switch from using random cards to using selected ones
+	public void selectComputerCards() {
+
+		for (int i = 0; i < 3; i++) {
+			int max = 12;
+			int min = 0;
+			int randNum = rand.nextInt((max - min) + 1) + min;
+			int randNum1 = rand.nextInt((max - min) + 1) + min;
+			while (randNum == randNum1) {
+				randNum1 = rand.nextInt((max - min) + 1) + min;
+			}
+			int randNum2 = rand.nextInt((max - min) + 1) + min;
+			while (randNum2 == randNum || randNum2 == randNum1) {
+				randNum2 = rand.nextInt((max - min) + 1) + min;
+			}
+
+			ComputerPlayer temp;
+			temp = comp1;
+			int x = 50;
+			int x1 = 50;
+			int x2 = 50;
+			int y = (int) temp.getHand()[randNum].getSprite().getY();
+			int y1 = (int) temp.getHand()[randNum1].getSprite().getY();
+			int y2 = (int) temp.getHand()[randNum2].getSprite().getY();
+			if (i == 1) {
+				temp = comp2;
+				x = (int) temp.getHand()[randNum].getSprite().getX();
+				x1 = (int) temp.getHand()[randNum1].getSprite().getX();
+				x2 = (int) temp.getHand()[randNum2].getSprite().getX();
+				y = 50;
+				y1 = 50;
+				y2 = 50;
+			} else if (i == 2) {
+				temp = comp3;
+				x = 760;
+				x1 = 760;
+				x2 = 760;
+				y = (int) temp.getHand()[randNum].getSprite().getY();
+				y1 = (int) temp.getHand()[randNum1].getSprite().getY();
+				y2 = (int) temp.getHand()[randNum2].getSprite().getY();
+			}
+
+			// select 3 cards for the computer player
+			anim.createAnimation(new Animation(anim, temp.getHand()[randNum]
+					.getSprite(), new Point(x, y), 30));
+			anim.createAnimation(new Animation(anim, temp.getHand()[randNum1]
+					.getSprite(), new Point(x1, y1), 30));
+			anim.createAnimation(new Animation(anim, temp.getHand()[randNum2]
+					.getSprite(), new Point(x2, y2), 30));
 		}
 	}
 
