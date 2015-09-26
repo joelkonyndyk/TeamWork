@@ -55,9 +55,14 @@ public class ComputerPlayer {
 	public boolean isTurn() {
 		return isTurn;
 	}
+	
 
 	public void setTurn(boolean isTurn) {
 		this.isTurn = isTurn;
+	}
+	
+	public void setHand(Card card, int cardIndexToPass){
+		this.hand[cardIndexToPass] = card;
 	}
 
 }

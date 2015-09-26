@@ -50,13 +50,13 @@ public class Card {
 
 	public void checkSuit() {
 		if (suitNumber == 1) {
-			suit = "spade";
-		} else if (suitNumber == 2) {
 			suit = "heart";
+		} else if (suitNumber == 2) {
+			suit = "diamond";
 		} else if (suitNumber == 3) {
 			suit = "club";
 		} else if (suitNumber == 4) {
-			suit = "diamond";
+			suit = "spade";
 		}
 	}
 
@@ -86,19 +86,6 @@ public class Card {
 
 	public void setCardBack(BufferedImage img) {
 		cardBack = img;
-	}
-	
-	public void setCardNumber(int CardNumber){
-		
-		switch(cardNumber){
-		case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10: case 11: case 12: case 13:
-		    System.out.println("testing case 1 to 5");
-//		case 1 * 2: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10: case 11: case 12: case 13:    
-//		    System.Out.Println("testing case 6 to 10");
-//		    break;
-		 default:
-		
-		}
 	}
 
 	public String getSuit() {
