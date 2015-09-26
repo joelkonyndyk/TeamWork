@@ -36,10 +36,18 @@ public class Deck {
 				suitCount = 1;
 				sType++;
 			}
+			if (suitCount == 1) {
+				suitCount = 14;
+			}
 			tempSprite = new Sprite(spriteSheet.getTile(i));
 			deck[i] = new Card(suitCount, suitType[sType], i + 1, tempSprite);
 			deck[i].setCardBack(spriteSheet.getTile(59));
-			suitCount++;
+
+			if (suitCount == 14) {
+				suitCount = 2;
+			} else {
+				suitCount++;
+			}
 		}
 	}
 

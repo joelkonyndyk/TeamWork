@@ -52,15 +52,7 @@ public class Player {
 					swapped = true;
 				}
 				if (hand[i].getSuitNumber() == hand[i + 1].getSuitNumber()) {
-					if (hand[i].getCardNumber() > hand[i + 1].getCardNumber()
-							&& hand[i + 1].getCardNumber() != 1) {
-						tmp = hand[i];
-						hand[i] = hand[i + 1];
-						hand[i + 1] = tmp;
-						swapped = true;
-					}
-					if (hand[i].getCardNumber() == 1
-							&& hand[i + 1].getCardNumber() != 1) {
+					if (hand[i].getCardNumber() > hand[i + 1].getCardNumber()) {
 						tmp = hand[i];
 						hand[i] = hand[i + 1];
 						hand[i + 1] = tmp;
