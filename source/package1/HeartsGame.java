@@ -80,9 +80,9 @@ public class HeartsGame {
 			comp1.getHand()[i].getSprite().setPosition(30, locationSides);
 			comp3.getHand()[i].getSprite().setPosition(780, locationSides);
 
-			comp1.getHand()[i].setShowBack(true);
-			comp2.getHand()[i].setShowBack(true);
-			comp3.getHand()[i].setShowBack(true);
+			// comp1.getHand()[i].setShowBack(true);
+			// comp2.getHand()[i].setShowBack(true);
+			// comp3.getHand()[i].setShowBack(true);
 
 			location += 50;
 			locationTop += 20;
