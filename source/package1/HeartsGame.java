@@ -30,6 +30,7 @@ public class HeartsGame {
 	// private Sprite sprite;
 	// private Sprite cardBack;
 	private Sprite spriteTest;
+	private Sprite spriteTest1;
 
 	private AnimationController anim;
 
@@ -91,6 +92,8 @@ public class HeartsGame {
 		// Draws the test card on the screen
 		spriteTest = deck.getCard(0).getSprite().clone();
 		spriteTest.setPosition(175, 175);
+		spriteTest1 = deck.getCard(1).getSprite().clone();
+		spriteTest1.setPosition(200, 200);
 
 	}
 
@@ -164,6 +167,22 @@ public class HeartsGame {
 
 					anim.createAnimation(new Animation(anim, spriteTest,
 							new Point(175, 175), 50));
+				}
+
+			}
+			
+			if (spriteTest1.getBounds().contains(pointClicked)) {
+
+				// creates a new animation when the card is clicked
+				if (spriteTest1.getX() == 200 && spriteTest1.getY() == 200) {
+					anim.createAnimation(new Animation(anim, spriteTest1,
+							new Point(575, 325), 100));
+				} else if (spriteTest1.getX() == 575 && spriteTest1.getY() == 325) {
+					// anim.createAnimation(new Animation(anim, spriteTest,
+					// new Point(175, 175), 90, 50));
+
+					anim.createAnimation(new Animation(anim, spriteTest1,
+							new Point(200, 200), 50));
 				}
 
 			}
@@ -243,25 +262,25 @@ public class HeartsGame {
 		// Game play after cards have been passed
 		if (mouseClicked && player.isTurn() == true && passingCards == false) {
 
-			for (int i = 0; i < player.getHand().length; i++) {
-				if (player.getHand()[i].getSprite().getVisibleBounds(i)
-						.contains(pointClicked)
-						&& player.getHand()[i].getCardNumber() != -1) {
-
-					System.out.println(player.getHand()[i].getCardNumber());
-					System.out.println(player.isTurn());
-
-					// *********How do I make the cards reprint when I
-					// change
-					// how the sprite looks?*******
-					// comp1.getHand()[i].setShowBack(false);
-					// comp1.getHand()[i].getSprite().setPosition(400, 175);
-				}
-
-			}
-
-			mouseClicked = false;
-			player.setTurn(false);
+//			for (int i = 0; i < player.getHand().length; i++) {
+//				if (player.getHand()[i].getSprite().getVisibleBounds(i)
+//						.contains(pointClicked)
+//						&& player.getHand()[i].getCardNumber() != -1) {
+//
+//					System.out.println(player.getHand()[i].getCardNumber());
+//					System.out.println(player.isTurn());
+//
+//					// *********How do I make the cards reprint when I
+//					// change
+//					// how the sprite looks?*******
+//					// comp1.getHand()[i].setShowBack(false);
+//					// comp1.getHand()[i].getSprite().setPosition(400, 175);
+//				}
+//
+//			}
+//
+//			mouseClicked = false;
+//			player.setTurn(false);
 
 		}
 
@@ -279,7 +298,11 @@ public class HeartsGame {
 		DrawOutline(comp2.getName(), 280, 20, g);
 		DrawOutline(comp3.getName(), 780, 70, g);
 
+		// Draws the test cards on the screen
 		spriteTest.paint(g);
+		spriteTest1.paint(g);
+		
+//		spriteTest
 
 		for (int i = 0; i < player.getHand().length; i++) {
 			player.getHand()[i].getSprite().paint(g);
