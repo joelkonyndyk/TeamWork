@@ -8,8 +8,9 @@ public class Player {
 	private Card[] hand;
 	private Card[] sort;
 
-	private int[] playerHandPositionX = { 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700 };
-	
+	private int[] playerHandPositionX = { 100, 150, 200, 250, 300, 350, 400,
+			450, 500, 550, 600, 650, 700 };
+
 	private boolean isTurn = false;
 
 	private int startCard;
@@ -35,8 +36,8 @@ public class Player {
 		}
 	}
 
+	// Sorts the players hand by suit and low to high (Ace high)
 	public void sortHand() {
-
 		boolean swapped = true;
 		int j = 0;
 		Card tmp;
@@ -51,13 +52,22 @@ public class Player {
 					swapped = true;
 				}
 				if (hand[i].getSuitNumber() == hand[i + 1].getSuitNumber()) {
-					if (hand[i].getCardNumber() > hand[i + 1].getCardNumber()) {
+					if (hand[i].getCardNumber() > hand[i + 1].getCardNumber()
+							&& hand[i + 1].getCardNumber() != 1) {
+						tmp = hand[i];
+						hand[i] = hand[i + 1];
+						hand[i + 1] = tmp;
+						swapped = true;
+					}
+					if (hand[i].getCardNumber() == 1
+							&& hand[i + 1].getCardNumber() != 1) {
 						tmp = hand[i];
 						hand[i] = hand[i + 1];
 						hand[i + 1] = tmp;
 						swapped = true;
 					}
 				}
+
 			}
 		}
 	}
@@ -74,8 +84,7 @@ public class Player {
 		return hand;
 	}
 
-	
-	public int[] getP1CardLocX(){
+	public int[] getP1CardLocX() {
 		return playerHandPositionX;
 	}
 
@@ -86,8 +95,8 @@ public class Player {
 	public void setTurn(boolean isTurn) {
 		this.isTurn = isTurn;
 	}
-	
-	public void setHand(Card card, int cardIndexToPass){
+
+	public void setHand(Card card, int cardIndexToPass) {
 		this.hand[cardIndexToPass] = card;
 	}
 }

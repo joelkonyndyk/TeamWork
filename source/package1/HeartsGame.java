@@ -80,9 +80,10 @@ public class HeartsGame {
 			comp1.getHand()[i].getSprite().setPosition(30, locationSides);
 			comp3.getHand()[i].getSprite().setPosition(780, locationSides);
 
-			comp1.getHand()[i].setShowBack(true);
-			comp2.getHand()[i].setShowBack(true);
-			comp3.getHand()[i].setShowBack(true);
+			// Sets the computers hands to show the back of their cards
+			// comp1.getHand()[i].setShowBack(true);
+			// comp2.getHand()[i].setShowBack(true);
+			// comp3.getHand()[i].setShowBack(true);
 
 			location += 50;
 			locationTop += 20;
@@ -144,32 +145,32 @@ public class HeartsGame {
 	// Checks to see who holds the 2 of clubs at the start of the game
 	public void twoOfClubsStarts() {
 
-		// System.out.println(player.getHand()[0].getSuit());
-		// System.out.println(player.getHand()[0].getCardNumber());
-		// System.out.println(player.getHand()[1].getSuit());
-		// System.out.println(player.getHand()[1].getCardNumber());
-		// System.out.println(player.getHand()[2].getSuit());
-		// System.out.println(player.getHand()[2].getCardNumber());
-		// System.out.println(player.getHand()[3].getSuit());
-		// System.out.println(player.getHand()[3].getCardNumber());
-		// System.out.println(player.getHand()[4].getSuit());
-		// System.out.println(player.getHand()[4].getCardNumber());
-		// System.out.println(player.getHand()[5].getSuit());
-		// System.out.println(player.getHand()[5].getCardNumber());
-		// System.out.println(player.getHand()[6].getSuit());
-		// System.out.println(player.getHand()[6].getCardNumber());
-		// System.out.println(player.getHand()[7].getSuit());
-		// System.out.println(player.getHand()[7].getCardNumber());
-		// System.out.println(player.getHand()[8].getSuit());
-		// System.out.println(player.getHand()[8].getCardNumber());
-		// System.out.println(player.getHand()[9].getSuit());
-		// System.out.println(player.getHand()[9].getCardNumber());
-		// System.out.println(player.getHand()[10].getSuit());
-		// System.out.println(player.getHand()[10].getCardNumber());
-		// System.out.println(player.getHand()[11].getSuit());
-		// System.out.println(player.getHand()[11].getCardNumber());
-		// System.out.println(player.getHand()[12].getSuit());
-		// System.out.println(player.getHand()[12].getCardNumber());
+		System.out.println(player.getHand()[0].getSuit());
+		System.out.println(player.getHand()[0].getCardNumber());
+		System.out.println(player.getHand()[1].getSuit());
+		System.out.println(player.getHand()[1].getCardNumber());
+		System.out.println(player.getHand()[2].getSuit());
+		System.out.println(player.getHand()[2].getCardNumber());
+		System.out.println(player.getHand()[3].getSuit());
+		System.out.println(player.getHand()[3].getCardNumber());
+		System.out.println(player.getHand()[4].getSuit());
+		System.out.println(player.getHand()[4].getCardNumber());
+		System.out.println(player.getHand()[5].getSuit());
+		System.out.println(player.getHand()[5].getCardNumber());
+		System.out.println(player.getHand()[6].getSuit());
+		System.out.println(player.getHand()[6].getCardNumber());
+		System.out.println(player.getHand()[7].getSuit());
+		System.out.println(player.getHand()[7].getCardNumber());
+		System.out.println(player.getHand()[8].getSuit());
+		System.out.println(player.getHand()[8].getCardNumber());
+		System.out.println(player.getHand()[9].getSuit());
+		System.out.println(player.getHand()[9].getCardNumber());
+		System.out.println(player.getHand()[10].getSuit());
+		System.out.println(player.getHand()[10].getCardNumber());
+		System.out.println(player.getHand()[11].getSuit());
+		System.out.println(player.getHand()[11].getCardNumber());
+		System.out.println(player.getHand()[12].getSuit());
+		System.out.println(player.getHand()[12].getCardNumber());
 
 		// for (int i = 0; i < 12; i++) {
 		// System.out.println("Checking for 2 of Clubs");
