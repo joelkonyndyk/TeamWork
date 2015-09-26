@@ -121,41 +121,63 @@ public class HeartsGame {
 
 	}
 
-	// finish this after switching up all the other methods
-
-	// Card tempCardHolder;
-	//
-	// public void passLeft(){
-	//
-	// player.getHand()[1] = tempCardHolder;
-	//
-	// }
+	//commented out pass left cards b/c this currently isnt working
+	
+	//testing passing cards: only grabbing comp1's 3rd, 5th, and 7th card
+//	public void passLeft() {
+//		
+//		for (int i = 0; i < 12; i++)
+//			if (player.getHand()[i] == cardsHaveBeenPassed[0]) {
+//				player.setHand(comp1.getHand()[3], i);
+//				
+//			} else if (player.getHand()[i] == cardsHaveBeenPassed[1]) {
+//				player.setHand(comp1.getHand()[5], i);
+//				
+//			} else if (player.getHand()[i] == cardsHaveBeenPassed[2]) {
+//				player.setHand(comp1.getHand()[7], i);
+//				
+//			}
+//		
+//		
+//		//used 1 as the starting point to get the correct positions for the cards...
+//		if(true){
+//			for(int i = 0; i < 12; i++)
+//			player.getHand()[i].getSprite().setPosition(100 + 50 * i, 445);
+//		}
+//	
+//	
+//	}
 
 	// Checks to see who holds the 2 of clubs at the start of the game
 	public void twoOfClubsStarts() {
 
-		// for (int i = 0; i < 12; i++) {
-		// System.out.println("Checking for 2 of Clubs");
-		// if (player.getHand()[i].getSuitNumber() == 3 &&
-		// player.getHand()[i].getCardNumber() == 2 ) {
-		// player.setTurn(true);
-		// System.out.println("P1");
-		// } else if (comp1.getHand()[i].getSuitNumber() == 3 &&
-		// comp1.getHand()[i].getCardNumber() == 2) {
-		// comp1.setTurn(true);
-		// System.out.println("C1");
-		// } else if (comp2.getHand()[i].getSuitNumber() == 3 &&
-		// comp1.getHand()[i].getCardNumber() == 2) {
-		// comp2.setTurn(true);
-		// System.out.println("C2");
-		// } else if (comp3.getHand()[i].getSuitNumber() == 3 &&
-		// comp1.getHand()[i].getCardNumber() == 2){
-		// comp3.setTurn(true);
-		// System.out.println("C3");
-		//
-		// }
 
-		// }
+		for (int i = 0; i < 12; i++) {
+			
+			if (player.getHand()[i].getSuitNumber() == 2
+					&& player.getHand()[i].getCardNumber() == 2) {
+				player.setTurn(true);
+				System.out.println("P1");
+				break;
+			} else if (comp1.getHand()[i].getSuitNumber() == 2
+					&& comp1.getHand()[i].getCardNumber() == 2) {
+				comp1.setTurn(true);
+				System.out.println("C1");
+				break;
+			} else if (comp2.getHand()[i].getSuitNumber() == 2
+					&& comp2.getHand()[i].getCardNumber() == 2) {
+				comp2.setTurn(true);
+				System.out.println("C2");
+				break;
+			} else if (comp3.getHand()[i].getSuitNumber() == 2
+					&& comp3.getHand()[i].getCardNumber() == 2) {
+				comp3.setTurn(true);
+				System.out.println("C3");
+				break;
+
+		 }
+
+		 }
 	}
 
 	public void tick() {
@@ -222,13 +244,10 @@ public class HeartsGame {
 
 				for (int i = 0; i < player.getHand().length; i++) {
 
-					// may need to change the get visible bounds class later b/c
-					// only accounts for bounds when in a players hand
 					if (player.getHand()[i].getSprite().getVisibleBounds(i)
 							.contains(pointClicked)
 							&& passingThreeCardsCounter < 3) {
 
-//						checkCardAlreadyPassed(player.getHand()[i]);
 						addCardToAlreadyPassed(player.getHand()[i]);
 						passingThreeCardsCounter++;
 
@@ -239,6 +258,11 @@ public class HeartsGame {
 						 System.out.println(passingThreeCardsCounter
 						 + " Card Counter");
 					}
+					
+					//this is currently making the cards disappear
+					
+//					passLeft();
+					
 				}
 
 				if (passingThreeCardsCounter == 3) {
