@@ -37,7 +37,7 @@ public class Player {
 	}
 
 	public void sortHand() {
-
+ 
 		boolean swapped = true;
 		int j = 0;
 		Card tmp;
