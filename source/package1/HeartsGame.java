@@ -173,57 +173,34 @@ public class HeartsGame {
 	// }
 
 	// Checks to see who holds the 2 of clubs at the start of the game
+
 	public void twoOfClubsStarts() {
 
-		// System.out.println(player.getHand()[0].getSuit());
-		// System.out.println(player.getHand()[0].getCardNumber());
-		// System.out.println(player.getHand()[1].getSuit());
-		// System.out.println(player.getHand()[1].getCardNumber());
-		// System.out.println(player.getHand()[2].getSuit());
-		// System.out.println(player.getHand()[2].getCardNumber());
-		// System.out.println(player.getHand()[3].getSuit());
-		// System.out.println(player.getHand()[3].getCardNumber());
-		// System.out.println(player.getHand()[4].getSuit());
-		// System.out.println(player.getHand()[4].getCardNumber());
-		// System.out.println(player.getHand()[5].getSuit());
-		// System.out.println(player.getHand()[5].getCardNumber());
-		// System.out.println(player.getHand()[6].getSuit());
-		// System.out.println(player.getHand()[6].getCardNumber());
-		// System.out.println(player.getHand()[7].getSuit());
-		// System.out.println(player.getHand()[7].getCardNumber());
-		// System.out.println(player.getHand()[8].getSuit());
-		// System.out.println(player.getHand()[8].getCardNumber());
-		// System.out.println(player.getHand()[9].getSuit());
-		// System.out.println(player.getHand()[9].getCardNumber());
-		// System.out.println(player.getHand()[10].getSuit());
-		// System.out.println(player.getHand()[10].getCardNumber());
-		// System.out.println(player.getHand()[11].getSuit());
-		// System.out.println(player.getHand()[11].getCardNumber());
-		// System.out.println(player.getHand()[12].getSuit());
-		// System.out.println(player.getHand()[12].getCardNumber());
+		for (int i = 0; i < 12; i++) {
+			System.out.println("Checking for 2 of Clubs");
+			if (player.getHand()[i].getSuitNumber() == 2
+					&& player.getHand()[i].getCardNumber() == 2) {
+				player.setTurn(true);
+				System.out.println("P1");
+				break;
+			} else if (comp1.getHand()[i].getSuitNumber() == 2
+					&& comp1.getHand()[i].getCardNumber() == 2) {
+				comp1.setTurn(true);
+				System.out.println("C1");
+				break;
+			} else if (comp2.getHand()[i].getSuitNumber() == 2
+					&& comp2.getHand()[i].getCardNumber() == 2) {
+				comp2.setTurn(true);
+				System.out.println("C2");
+				break;
+			} else if (comp3.getHand()[i].getSuitNumber() == 2
+					&& comp3.getHand()[i].getCardNumber() == 2) {
+				comp3.setTurn(true);
+				System.out.println("C3");
+				break;
+			}
 
-		// for (int i = 0; i < 12; i++) {
-		// System.out.println("Checking for 2 of Clubs");
-		// if (player.getHand()[i].getSuitNumber() == 3 &&
-		// player.getHand()[i].getCardNumber() == 2 ) {
-		// player.setTurn(true);
-		// System.out.println("P1");
-		// } else if (comp1.getHand()[i].getSuitNumber() == 3 &&
-		// comp1.getHand()[i].getCardNumber() == 2) {
-		// comp1.setTurn(true);
-		// System.out.println("C1");
-		// } else if (comp2.getHand()[i].getSuitNumber() == 3 &&
-		// comp1.getHand()[i].getCardNumber() == 2) {
-		// comp2.setTurn(true);
-		// System.out.println("C2");
-		// } else if (comp3.getHand()[i].getSuitNumber() == 3 &&
-		// comp1.getHand()[i].getCardNumber() == 2){
-		// comp3.setTurn(true);
-		// System.out.println("C3");
-		//
-		// }
-
-		// }
+		}
 	}
 
 	public void tick() {
@@ -304,7 +281,6 @@ public class HeartsGame {
 							.contains(pointClicked)
 							&& passingThreeCardsCounter < 3) {
 
-						// checkCardAlreadyPassed(player.getHand()[i]);
 						addCardToAlreadyPassed(player.getHand()[i]);
 						passingThreeCardsCounter++;
 
