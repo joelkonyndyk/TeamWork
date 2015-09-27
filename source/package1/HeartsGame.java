@@ -3,7 +3,11 @@ package package1;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Random;
 
 public class HeartsGame {
@@ -43,7 +47,17 @@ public class HeartsGame {
 
 	private boolean compHandSelected = false;
 
+	private boolean readyToPass = false;
+
+	private BufferedImage ArrowButton = null;
+	private BufferedImage ArrowButtonDisabled = null;
+
+	private Sprite ArrowBtn;
+	private Sprite ArrowBtnDisabled;
+
 	Font font;
+
+	private int cardsToPass = 0;
 
 	public HeartsGame(Deck deck) {
 		this.deck = deck;
@@ -66,6 +80,28 @@ public class HeartsGame {
 		initHands();
 
 		font = new Font("SansSerif", Font.BOLD, 14);
+
+		BufferedImageLoader loader = new BufferedImageLoader();
+		try {
+			ArrowButton = loader.loadImage("/arrow.png");
+			ArrowButtonDisabled = loader.loadImage("/arrow_disabled.png");
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		ArrowButton = resize(ArrowButton, 60, 60);
+		ArrowButtonDisabled = resize(ArrowButtonDisabled, 60, 60);
+
+		ArrowBtn = new Sprite(ArrowButton);
+		ArrowBtnDisabled = new Sprite(ArrowButtonDisabled);
+
+		// Should switch location to be dependent on screen dimensions
+		ArrowBtn.setPosition(400, 340);
+		ArrowBtnDisabled.setPosition(400, 340);
+
+		ArrowBtn.rotateImage(180);
+		ArrowBtnDisabled.rotateImage(180);
 
 	}
 
@@ -139,32 +175,32 @@ public class HeartsGame {
 	// Checks to see who holds the 2 of clubs at the start of the game
 	public void twoOfClubsStarts() {
 
-		System.out.println(player.getHand()[0].getSuit());
-		System.out.println(player.getHand()[0].getCardNumber());
-		System.out.println(player.getHand()[1].getSuit());
-		System.out.println(player.getHand()[1].getCardNumber());
-		System.out.println(player.getHand()[2].getSuit());
-		System.out.println(player.getHand()[2].getCardNumber());
-		System.out.println(player.getHand()[3].getSuit());
-		System.out.println(player.getHand()[3].getCardNumber());
-		System.out.println(player.getHand()[4].getSuit());
-		System.out.println(player.getHand()[4].getCardNumber());
-		System.out.println(player.getHand()[5].getSuit());
-		System.out.println(player.getHand()[5].getCardNumber());
-		System.out.println(player.getHand()[6].getSuit());
-		System.out.println(player.getHand()[6].getCardNumber());
-		System.out.println(player.getHand()[7].getSuit());
-		System.out.println(player.getHand()[7].getCardNumber());
-		System.out.println(player.getHand()[8].getSuit());
-		System.out.println(player.getHand()[8].getCardNumber());
-		System.out.println(player.getHand()[9].getSuit());
-		System.out.println(player.getHand()[9].getCardNumber());
-		System.out.println(player.getHand()[10].getSuit());
-		System.out.println(player.getHand()[10].getCardNumber());
-		System.out.println(player.getHand()[11].getSuit());
-		System.out.println(player.getHand()[11].getCardNumber());
-		System.out.println(player.getHand()[12].getSuit());
-		System.out.println(player.getHand()[12].getCardNumber());
+		// System.out.println(player.getHand()[0].getSuit());
+		// System.out.println(player.getHand()[0].getCardNumber());
+		// System.out.println(player.getHand()[1].getSuit());
+		// System.out.println(player.getHand()[1].getCardNumber());
+		// System.out.println(player.getHand()[2].getSuit());
+		// System.out.println(player.getHand()[2].getCardNumber());
+		// System.out.println(player.getHand()[3].getSuit());
+		// System.out.println(player.getHand()[3].getCardNumber());
+		// System.out.println(player.getHand()[4].getSuit());
+		// System.out.println(player.getHand()[4].getCardNumber());
+		// System.out.println(player.getHand()[5].getSuit());
+		// System.out.println(player.getHand()[5].getCardNumber());
+		// System.out.println(player.getHand()[6].getSuit());
+		// System.out.println(player.getHand()[6].getCardNumber());
+		// System.out.println(player.getHand()[7].getSuit());
+		// System.out.println(player.getHand()[7].getCardNumber());
+		// System.out.println(player.getHand()[8].getSuit());
+		// System.out.println(player.getHand()[8].getCardNumber());
+		// System.out.println(player.getHand()[9].getSuit());
+		// System.out.println(player.getHand()[9].getCardNumber());
+		// System.out.println(player.getHand()[10].getSuit());
+		// System.out.println(player.getHand()[10].getCardNumber());
+		// System.out.println(player.getHand()[11].getSuit());
+		// System.out.println(player.getHand()[11].getCardNumber());
+		// System.out.println(player.getHand()[12].getSuit());
+		// System.out.println(player.getHand()[12].getCardNumber());
 
 		// for (int i = 0; i < 12; i++) {
 		// System.out.println("Checking for 2 of Clubs");
@@ -233,17 +269,25 @@ public class HeartsGame {
 									.contains(pointClicked)) {
 					} else {
 						// Animates the cards up and down accordingly
-						if (player.getHand()[i].getSprite().getY() == 445) {
-							anim.createAnimation(new Animation(anim, player
-									.getHand()[i].getSprite(), new Point(Math
-									.round(player.getHand()[i].getSprite()
-											.getX()), 415), 10));
-						} else if (Math.round(player.getHand()[i].getSprite()
-								.getY()) == 415) {
+						if (cardsToPass < 3) {
+							if (player.getHand()[i].getSprite().getY() == 445) {
+								anim.createAnimation(new Animation(anim, player
+										.getHand()[i].getSprite(), new Point(
+										Math.round(player.getHand()[i]
+												.getSprite().getX()), 415), 10));
+								cardsToPass++;
+								player.getHand()[i].getSprite()
+										.setSelectedToPass(true);
+							}
+						}
+						if (Math.round(player.getHand()[i].getSprite().getY()) == 415) {
 							anim.createAnimation(new Animation(anim, player
 									.getHand()[i].getSprite(), new Point(Math
 									.round(player.getHand()[i].getSprite()
 											.getX()), 445), 10));
+							cardsToPass--;
+							player.getHand()[i].getSprite().setSelectedToPass(
+									false);
 						}
 					}
 				}
@@ -264,19 +308,19 @@ public class HeartsGame {
 						addCardToAlreadyPassed(player.getHand()[i]);
 						passingThreeCardsCounter++;
 
-						System.out.println(cardsHaveBeenPassed[0]);
-						System.out.println(cardsHaveBeenPassed[1]);
-						System.out.println(cardsHaveBeenPassed[2]);
-
-						System.out.println(passingThreeCardsCounter
-								+ " Card Counter");
+						// System.out.println(cardsHaveBeenPassed[0]);
+						// System.out.println(cardsHaveBeenPassed[1]);
+						// System.out.println(cardsHaveBeenPassed[2]);
+						//
+						// System.out.println(passingThreeCardsCounter
+						// + " Card Counter");
 					}
 				}
 
 				if (passingThreeCardsCounter == 3) {
 					passingThreeCardsCounter = 0;
 					passingCards = false;
-					System.out.println("Passing Cards Complete");
+					// System.out.println("Passing Cards Complete");
 
 					// if (spriteTest.getBounds().contains(pointClicked)) {
 					//
@@ -331,6 +375,12 @@ public class HeartsGame {
 			compHandSelected = true;
 		}
 
+		if (cardsToPass == 3) {
+			readyToPass = true;
+		} else {
+			readyToPass = false;
+		}
+
 		anim.tick();
 
 	}
@@ -349,18 +399,28 @@ public class HeartsGame {
 		spriteTest.paint(g);
 		spriteTest1.paint(g);
 
-		// spriteTest.getImage()
-
 		for (int i = 0; i < player.getHand().length; i++) {
 			player.getHand()[i].getSprite().paint(g);
 			comp1.getHand()[i].getSprite().paint(g);
 			comp2.getHand()[i].getSprite().paint(g);
 			comp3.getHand()[i].getSprite().paint(g);
 		}
+
+		// Need to set up logic as to whether the pass button should be shown
+		// Draw the pass button
+		if (readyToPass) {
+			ArrowBtn.paint(g);
+		} else {
+			ArrowBtnDisabled.paint(g);
+		}
 	}
 
 	// will have to switch from using random cards to using selected ones
 	public void selectComputerCards() {
+
+		int tempX = 60;
+		int tempX1 = 750;
+		int tempY = 60;
 
 		for (int i = 0; i < 3; i++) {
 			int max = 12;
@@ -377,9 +437,9 @@ public class HeartsGame {
 
 			ComputerPlayer temp;
 			temp = comp1;
-			int x = 50;
-			int x1 = 50;
-			int x2 = 50;
+			int x = tempX;
+			int x1 = tempX;
+			int x2 = tempX;
 			int y = (int) temp.getHand()[randNum].getSprite().getY();
 			int y1 = (int) temp.getHand()[randNum1].getSprite().getY();
 			int y2 = (int) temp.getHand()[randNum2].getSprite().getY();
@@ -388,14 +448,14 @@ public class HeartsGame {
 				x = (int) temp.getHand()[randNum].getSprite().getX();
 				x1 = (int) temp.getHand()[randNum1].getSprite().getX();
 				x2 = (int) temp.getHand()[randNum2].getSprite().getX();
-				y = 50;
-				y1 = 50;
-				y2 = 50;
+				y = tempY;
+				y1 = tempY;
+				y2 = tempY;
 			} else if (i == 2) {
 				temp = comp3;
-				x = 760;
-				x1 = 760;
-				x2 = 760;
+				x = tempX1;
+				x1 = tempX1;
+				x2 = tempX1;
 				y = (int) temp.getHand()[randNum].getSprite().getY();
 				y1 = (int) temp.getHand()[randNum1].getSprite().getY();
 				y2 = (int) temp.getHand()[randNum2].getSprite().getY();
@@ -403,11 +463,11 @@ public class HeartsGame {
 
 			// select 3 cards for the computer player
 			anim.createAnimation(new Animation(anim, temp.getHand()[randNum]
-					.getSprite(), new Point(x, y), 30));
+					.getSprite(), new Point(x, y), 40));
 			anim.createAnimation(new Animation(anim, temp.getHand()[randNum1]
-					.getSprite(), new Point(x1, y1), 30));
+					.getSprite(), new Point(x1, y1), 40));
 			anim.createAnimation(new Animation(anim, temp.getHand()[randNum2]
-					.getSprite(), new Point(x2, y2), 30));
+					.getSprite(), new Point(x2, y2), 40));
 		}
 	}
 
@@ -420,6 +480,18 @@ public class HeartsGame {
 
 		g2d.setColor(Color.WHITE);
 		g2d.drawString(str, x, y);
+	}
+
+	public static BufferedImage resize(BufferedImage image, int width,
+			int height) {
+		BufferedImage bi = new BufferedImage(width, height,
+				BufferedImage.TRANSLUCENT);
+		Graphics2D g2d = (Graphics2D) bi.createGraphics();
+		g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING,
+				RenderingHints.VALUE_RENDER_QUALITY));
+		g2d.drawImage(image, 0, 0, width, height, null);
+		g2d.dispose();
+		return bi;
 	}
 
 	public void mouseClicked(Point p) {

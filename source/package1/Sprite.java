@@ -30,6 +30,8 @@ public class Sprite implements Cloneable, Serializable {
 
 	private float refX;
 	private float refY;
+	
+	private boolean selectedToPass = false;
 
 	// For serialization
 	private static final long serialVersionUID = 1L;
@@ -293,6 +295,14 @@ public class Sprite implements Cloneable, Serializable {
 	 */
 	public int getHeight() {
 		return this.getImage().getHeight();
+	}
+	
+	public boolean isSelectedToPass(){
+		return selectedToPass;
+	}
+	
+	public void setSelectedToPass(Boolean b){
+		selectedToPass = b;
 	}
 
 	/*
