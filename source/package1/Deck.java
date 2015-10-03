@@ -1,5 +1,6 @@
 package package1;
 
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class Deck {
@@ -81,5 +82,9 @@ public class Deck {
 
 	public SpriteSheet getSpriteSheet() {
 		return spriteSheet;
+	}
+
+	public BufferedImage getTile(int i) {
+		return spriteSheet.getTile(i);
 	}
 }

@@ -37,6 +37,8 @@ public class HeartsGame {
 	private Sprite spriteTest;
 	private Sprite spriteTest1;
 
+	private Card blankCard;
+
 	private AnimationController anim;
 
 	private Random rand = new Random();
@@ -77,6 +79,24 @@ public class HeartsGame {
 		comp2 = new ComputerPlayer(names.getName(), deck, 2);
 		comp3 = new ComputerPlayer(names.getName(), deck, 3);
 
+		comp1.setIsSideComp(true);
+		comp2.setIsSideComp(false);
+		comp3.setIsSideComp(true);
+
+		// Makes sure the computers and the player never have the same name
+		while (comp1.getName().equals(plyrName)) {
+			comp1.setName(names.getName());
+		}
+		while (comp2.getName().equals(plyrName)
+				|| comp2.getName().equals(comp1.getName())) {
+			comp2.setName(names.getName());
+		}
+		while (comp3.getName().equals(plyrName)
+				|| comp3.getName().equals(comp1.getName())
+				|| comp3.getName().equals(comp2.getName())) {
+			comp3.setName(names.getName());
+		}
+
 		initHands();
 
 		font = new Font("SansSerif", Font.BOLD, 14);
@@ -115,7 +135,7 @@ public class HeartsGame {
 
 		for (int i = 0; i < player.getHand().length; i++) {
 			player.getHand()[i].getSprite().setPosition(location, 445);
-			// player.getHand()[i].setShowBack(false);
+			// player.getHand()[i].setShowBack(true);
 
 			comp2.getHand()[i].getSprite().setPosition(locationTop, 30);
 			comp1.getHand()[i].getSprite().setPosition(30, locationSides);
@@ -135,6 +155,8 @@ public class HeartsGame {
 		spriteTest.setPosition(175, 175);
 		spriteTest1 = deck.getCard(1).getSprite().clone();
 		spriteTest1.setPosition(200, 200);
+
+		blankCard = new Card(-1, -1, -1, new Sprite(deck.getTile(64)));
 
 	}
 
@@ -230,6 +252,23 @@ public class HeartsGame {
 
 		// used for testing purposes. Keep in code for now
 		if (mouseClicked) {
+
+			// Used to remove cards from the players hand to test Dynamic Hand
+			if (ArrowBtn.getBounds().contains(pointClicked)
+					|| ArrowBtnDisabled.getBounds().contains(pointClicked)) {
+				for (int i = 0; i < player.getHand().length; i++) {
+					if (player.getHand()[i].getSprite().isSelectedToPass()) {
+						player.getHand()[i] = blankCard;
+						cardsToPass--;
+						// shifts the hand to the left if needed
+						player.UpdateHand(anim);
+					}
+				}
+
+				// Used to test removing cards from computers hands
+				// comp1.getHand()[4] = blankCard;
+				// comp1.UpdateHand(anim);
+			}
 
 			if (spriteTest.getBounds().contains(pointClicked)) {
 				if (!spriteTest1.getBounds().contains(pointClicked)) {
@@ -390,7 +429,7 @@ public class HeartsGame {
 		g.setFont(font);
 
 		// Draws the players names on the screen
-		DrawOutline(player.getName(), 280, 410, g);
+		DrawOutline(player.getName(), 200, 410, g);
 		DrawOutline(comp1.getName(), 30, 60, g);
 		DrawOutline(comp2.getName(), 280, 20, g);
 		DrawOutline(comp3.getName(), 780, 60, g);

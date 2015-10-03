@@ -30,7 +30,7 @@ public class Sprite implements Cloneable, Serializable {
 
 	private float refX;
 	private float refY;
-	
+
 	private boolean selectedToPass = false;
 
 	// For serialization
@@ -296,12 +296,12 @@ public class Sprite implements Cloneable, Serializable {
 	public int getHeight() {
 		return this.getImage().getHeight();
 	}
-	
-	public boolean isSelectedToPass(){
+
+	public boolean isSelectedToPass() {
 		return selectedToPass;
 	}
-	
-	public void setSelectedToPass(Boolean b){
+
+	public void setSelectedToPass(Boolean b) {
 		selectedToPass = b;
 	}
 
@@ -311,6 +311,10 @@ public class Sprite implements Cloneable, Serializable {
 	 */
 	public float getX() {
 		return x;
+	}
+
+	public void setX(float x) {
+		this.x = x;
 	}
 
 	public float getRefX() {
@@ -327,6 +331,10 @@ public class Sprite implements Cloneable, Serializable {
 	 */
 	public float getY() {
 		return y;
+	}
+
+	public void setY(float y) {
+		this.y = y;
 	}
 
 	public float getRefY() {
