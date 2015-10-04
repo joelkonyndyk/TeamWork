@@ -6,11 +6,10 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.Transparency;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageFilter;
@@ -343,6 +342,10 @@ public class Sprite implements Cloneable, Serializable {
 
 	public float getRealY() {
 		return (y - refY);
+	}
+
+	public Point getLocation() {
+		return new Point((int) x, (int) y);
 	}
 
 	/*
