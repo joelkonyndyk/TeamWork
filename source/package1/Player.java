@@ -10,6 +10,10 @@ public class Player {
 
 	private Card[] hand;
 	private Card[] sort;
+	
+	private Card middleCard;
+
+	private Point midPoint;
 
 	private Stack<Card> cards = new Stack<Card>();
 
@@ -150,6 +154,22 @@ public class Player {
 
 	public int getCardPositionX(int i) {
 		return playerHandPositionX[i];
+	}
+
+	public void setMidPoint(Point p) {
+		midPoint = p;
+	}
+	
+	public Point getMidPoint(){
+		return midPoint;
+	}
+	
+	public Card getMiddleCard(){
+		return middleCard;
+	}
+	
+	public void setMiddleCard(Card c){
+		middleCard = c;
 	}
 
 	public boolean isTurn() {

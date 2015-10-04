@@ -8,7 +8,11 @@ public class ComputerPlayer {
 	private String compName;
 	private Deck deck;
 
+	private Point midPoint;
+
 	private Card[] hand;
+
+	private Card middleCard;
 
 	private Stack<Card> cards = new Stack<Card>();
 
@@ -20,12 +24,7 @@ public class ComputerPlayer {
 	private int startCard;
 
 	private final int posBaseX = 280;
-	private final int posBaseY = 70;
-	//
-	// private int[] HandPositionX = { 280, 300, 320, 3, 300, 350, 400,
-	// 450, 500, 550, 600, 650, 700 };
-	// private int[] HandPositionY = { 100, 150, 200, 250, 300, 350, 400,
-	// 450, 500, 550, 600, 650, 700 };
+	private final int posBaseY = 70;	
 
 	private final int handSize = 13;
 
@@ -70,13 +69,13 @@ public class ComputerPlayer {
 						if (isSideComp) {
 							anim.createAnimation(new Animation(anim,
 									hand[i + 1].getSprite(), new Point(
-											(int) hand[0].getSprite().getX(),
-											posBaseY + (i * 20)), 10));
+											(int) hand[i + 1].getSprite()
+													.getX(), posBaseY
+													+ (i * 20)), 10));
 						} else {
 							anim.createAnimation(new Animation(anim,
 									hand[i + 1].getSprite(), new Point(posBaseX
-											+ (i * 20), (int) hand[0]
-											.getSprite().getY()), 10));
+											+ (i * 20), 30), 10));
 						}
 
 						// Switches the spot of the card in the computers hand
@@ -113,8 +112,24 @@ public class ComputerPlayer {
 		return hand;
 	}
 
+	public void setMidPoint(Point p) {
+		midPoint = p;
+	}
+
+	public Point getMidPoint() {
+		return midPoint;
+	}
+
 	public void setIsSideComp(boolean b) {
 		isSideComp = b;
+	}
+
+	public Card getMiddleCard() {
+		return middleCard;
+	}
+
+	public void setMiddleCard(Card c) {
+		middleCard = c;
 	}
 
 	public boolean isTurn() {

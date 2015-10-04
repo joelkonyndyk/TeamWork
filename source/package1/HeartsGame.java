@@ -9,11 +9,9 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Random;
+import java.util.Stack;
 
 public class HeartsGame {
-	// This is where we will create the Hearts game logic
-
-	// fixed a bug here
 
 	int x = 0;
 	private boolean leadSuitPlayer = true;
@@ -23,6 +21,8 @@ public class HeartsGame {
 	private int passingThreeCardsCounter = 0;
 	private Card[] cardsHaveBeenPassed = { null, null, null };
 
+	private boolean playerTurn = false;
+
 	private RandomName names;
 	private String plyrName = "JOEL";
 	private Deck deck;
@@ -31,11 +31,6 @@ public class HeartsGame {
 
 	private boolean mouseClicked = false;
 	private Point pointClicked;
-
-	// private Sprite sprite;
-	// private Sprite cardBack;
-	private Sprite spriteTest;
-	private Sprite spriteTest1;
 
 	private Card blankCard;
 
@@ -50,6 +45,14 @@ public class HeartsGame {
 	private boolean compHandSelected = false;
 
 	private boolean readyToPass = false;
+
+	private boolean passLeft = false;
+	private boolean passRight = false;
+	private boolean passAcross = false;
+	private boolean hold = false;
+
+	private boolean arrowBtnEnabled = true;
+	private boolean arrowBtnVisible = true;
 
 	private BufferedImage ArrowButton = null;
 	private BufferedImage ArrowButtonDisabled = null;
@@ -68,6 +71,8 @@ public class HeartsGame {
 
 	public void init() {
 
+		passLeft = true;
+
 		names = new RandomName();
 
 		anim = new AnimationController();
@@ -82,6 +87,11 @@ public class HeartsGame {
 		comp1.setIsSideComp(true);
 		comp2.setIsSideComp(false);
 		comp3.setIsSideComp(true);
+
+		player.setMidPoint(new Point(414, 280));
+		comp1.setMidPoint(new Point(342, 230));
+		comp2.setMidPoint(new Point(414, 180));
+		comp3.setMidPoint(new Point(486, 230));
 
 		// Makes sure the computers and the player never have the same name
 		while (comp1.getName().equals(plyrName)) {
@@ -117,8 +127,8 @@ public class HeartsGame {
 		ArrowBtnDisabled = new Sprite(ArrowButtonDisabled);
 
 		// Should switch location to be dependent on screen dimensions
-		ArrowBtn.setPosition(400, 340);
-		ArrowBtnDisabled.setPosition(400, 340);
+		ArrowBtn.setPosition(420, 340);
+		ArrowBtnDisabled.setPosition(420, 340);
 
 		ArrowBtn.rotateImage(180);
 		ArrowBtnDisabled.rotateImage(180);
@@ -150,14 +160,7 @@ public class HeartsGame {
 			locationSides += 20;
 		}
 
-		// Draws the test card on the screen
-		spriteTest = deck.getCard(0).getSprite().clone();
-		spriteTest.setPosition(175, 175);
-		spriteTest1 = deck.getCard(1).getSprite().clone();
-		spriteTest1.setPosition(200, 200);
-
 		blankCard = new Card(-1, -1, -1, new Sprite(deck.getTile(64)));
-
 	}
 
 	public void run() {
@@ -172,7 +175,6 @@ public class HeartsGame {
 					&& cardsHaveBeenPassed[2] != card) {
 				cardsHaveBeenPassed[i] = card;
 				break;
-
 			}
 
 			if (cardsHaveBeenPassed[i] == card) {
@@ -181,7 +183,6 @@ public class HeartsGame {
 				i = 3;
 			}
 		}
-
 	}
 
 	// finish this after switching up all the other methods
@@ -250,48 +251,68 @@ public class HeartsGame {
 
 	public void tick() {
 
-		// used for testing purposes. Keep in code for now
 		if (mouseClicked) {
 
-			// Used to remove cards from the players hand to test Dynamic Hand
-			if (ArrowBtn.getBounds().contains(pointClicked)
-					|| ArrowBtnDisabled.getBounds().contains(pointClicked)) {
+			// this is the logic that sends cards to the middle when clicked
+			if (playerTurn) {
 				for (int i = 0; i < player.getHand().length; i++) {
-					if (player.getHand()[i].getSprite().isSelectedToPass()) {
+					if (player.getHand()[i].getSprite().getVisibleBounds(i)
+							.contains(pointClicked)) {
+						int max = 12;
+						int min = 0;
+
+						int temp1 = rand.nextInt((max - min) + 1) + min;
+						int temp2 = rand.nextInt((max - min) + 1) + min;
+						int temp3 = rand.nextInt((max - min) + 1) + min;
+
+						while (comp1.getHand()[temp1].getCardPlace() == -1) {
+							temp1 = rand.nextInt((max - min) + 1) + min;
+						}
+						while (comp2.getHand()[temp2].getCardPlace() == -1) {
+							temp2 = rand.nextInt((max - min) + 1) + min;
+						}
+						while (comp3.getHand()[temp3].getCardPlace() == -1) {
+							temp3 = rand.nextInt((max - min) + 1) + min;
+						}
+
+						// sets the card clicked as the card sent to the middle
+						player.setMiddleCard(player.getHand()[i]);
 						player.getHand()[i] = blankCard;
-						cardsToPass--;
+						comp1.setMiddleCard(comp1.getHand()[temp1]);
+						comp1.getHand()[temp1] = blankCard;
+						comp2.setMiddleCard(comp2.getHand()[temp2]);
+						comp2.getHand()[temp2] = blankCard;
+						comp3.setMiddleCard(comp3.getHand()[temp3]);
+						comp3.getHand()[temp3] = blankCard;
+
+						// Animation that sends cards to the middle
+						anim.createAnimation(new Animation(anim, player
+								.getMiddleCard().getSprite(), player
+								.getMidPoint(), 60));
+						anim.createAnimation(new Animation(anim, comp1
+								.getMiddleCard().getSprite(), comp1
+								.getMidPoint(), 60));
+						anim.createAnimation(new Animation(anim, comp2
+								.getMiddleCard().getSprite(), comp2
+								.getMidPoint(), 60));
+						anim.createAnimation(new Animation(anim, comp3
+								.getMiddleCard().getSprite(), comp3
+								.getMidPoint(), 60));
+
 						// shifts the hand to the left if needed
 						player.UpdateHand(anim);
-					}
-				}
-
-				// Used to test removing cards from computers hands
-				// comp1.getHand()[4] = blankCard;
-				// comp1.UpdateHand(anim);
-			}
-
-			if (spriteTest.getBounds().contains(pointClicked)) {
-				if (!spriteTest1.getBounds().contains(pointClicked)) {
-					// creates a new animation when the card is clicked
-					if (spriteTest.getX() == 175 && spriteTest.getY() == 175) {
-						anim.createAnimation(new Animation(anim, spriteTest,
-								new Point(550, 300), 100));
-					} else if (spriteTest.getX() == 550
-							&& spriteTest.getY() == 300) {
-						anim.createAnimation(new Animation(anim, spriteTest,
-								new Point(175, 175), 50));
+						comp1.UpdateHand(anim);
+						comp2.UpdateHand(anim);
+						comp3.UpdateHand(anim);
 					}
 				}
 			}
-			if (spriteTest1.getBounds().contains(pointClicked)) {
-				// creates a new animation when the card is clicked
-				if (spriteTest1.getX() == 200 && spriteTest1.getY() == 200) {
-					anim.createAnimation(new Animation(anim, spriteTest1,
-							new Point(575, 325), 100));
-				} else if (spriteTest1.getX() == 575
-						&& spriteTest1.getY() == 325) {
-					anim.createAnimation(new Animation(anim, spriteTest1,
-							new Point(200, 200), 50));
+
+			if (arrowBtnVisible) {
+				if (ArrowBtn.getBounds().contains(pointClicked) && readyToPass) {
+					passCards();
+					arrowBtnVisible = false;
+					playerTurn = true;
 				}
 			}
 
@@ -337,8 +358,6 @@ public class HeartsGame {
 
 				for (int i = 0; i < player.getHand().length; i++) {
 
-					// may need to change the get visible bounds class later b/c
-					// only accounts for bounds when in a players hand
 					if (player.getHand()[i].getSprite().getVisibleBounds(i)
 							.contains(pointClicked)
 							&& passingThreeCardsCounter < 3) {
@@ -360,18 +379,6 @@ public class HeartsGame {
 					passingThreeCardsCounter = 0;
 					passingCards = false;
 					// System.out.println("Passing Cards Complete");
-
-					// if (spriteTest.getBounds().contains(pointClicked)) {
-					//
-					// // creates a new animation when the card is clicked
-					// anim.createAnimation(new Animation(anim, spriteTest,
-					// new Point(550, 300), 50));
-					//
-					// // spriteTest.rotateImage90();
-					// // spriteTest.setPosition(spriteTest.getX() + 10,
-					// // spriteTest.getY());
-					//
-					// }
 
 					mouseClicked = false;
 					twoOfClubsStarts();
@@ -409,6 +416,7 @@ public class HeartsGame {
 		// Create if statement here to detect if it is the beginning of a
 		// passing round
 		// if it is select 3 cards from the computers hands and animate them
+		// compHandSelected = true;
 		if (!compHandSelected) {
 			selectComputerCards();
 			compHandSelected = true;
@@ -434,10 +442,6 @@ public class HeartsGame {
 		DrawOutline(comp2.getName(), 280, 20, g);
 		DrawOutline(comp3.getName(), 780, 60, g);
 
-		// Draws the test cards on the screen
-		spriteTest.paint(g);
-		spriteTest1.paint(g);
-
 		for (int i = 0; i < player.getHand().length; i++) {
 			player.getHand()[i].getSprite().paint(g);
 			comp1.getHand()[i].getSprite().paint(g);
@@ -445,12 +449,127 @@ public class HeartsGame {
 			comp3.getHand()[i].getSprite().paint(g);
 		}
 
+		if (playerTurn) {
+			try {
+				player.getMiddleCard().getSprite().paint(g);
+				comp1.getMiddleCard().getSprite().paint(g);
+				comp2.getMiddleCard().getSprite().paint(g);
+				comp3.getMiddleCard().getSprite().paint(g);
+			} catch (NullPointerException e) {
+
+			}
+		}
+
 		// Need to set up logic as to whether the pass button should be shown
 		// Draw the pass button
-		if (readyToPass) {
-			ArrowBtn.paint(g);
-		} else {
-			ArrowBtnDisabled.paint(g);
+		if (arrowBtnVisible) {
+			if (readyToPass) {
+				ArrowBtn.paint(g);
+			} else {
+				ArrowBtnDisabled.paint(g);
+			}
+		}
+	}
+
+	// currently implements the pass left only
+	public void passCards() {
+
+		int playerStk[] = new int[4];
+		int comp1Stk[] = new int[4];
+		int comp2Stk[] = new int[4];
+		int comp3Stk[] = new int[4];
+
+		int p = 1;
+		int c1 = 1;
+		int c2 = 1;
+		int c3 = 1;
+
+		Card temp1;
+		Card temp2;
+		Card temp3;
+
+		// detects and notes where the selected cards to pass are
+		for (int i = 0; i < player.getHand().length; i++) {
+			if (player.getHand()[i].getSprite().isSelectedToPass()) {
+				playerStk[p] = i;
+				p++;
+			}
+			if (comp1.getHand()[i].getSprite().isSelectedToPass()) {
+				comp1Stk[c1] = i;
+				c1++;
+			}
+			if (comp2.getHand()[i].getSprite().isSelectedToPass()) {
+				comp2Stk[c2] = i;
+				c2++;
+			}
+			if (comp3.getHand()[i].getSprite().isSelectedToPass()) {
+				comp3Stk[c3] = i;
+				c3++;
+			}
+		}
+
+		temp1 = comp3.getHand()[comp3Stk[1]];
+		temp2 = comp3.getHand()[comp3Stk[2]];
+		temp3 = comp3.getHand()[comp3Stk[3]];
+
+		// Animates the cards between the computer players
+		for (int count = 1; count < 4; count++) {
+			anim.createAnimation(new Animation(anim,
+					comp2.getHand()[comp2Stk[count]].getSprite(), new Point(
+							comp3.getHand()[comp3Stk[count]].getSprite()
+									.getLocation().x + 30,
+							comp3.getHand()[comp3Stk[count]].getSprite()
+									.getLocation().y), 25));
+
+			comp3.getHand()[comp3Stk[count]] = comp2.getHand()[comp2Stk[count]];
+
+			anim.createAnimation(new Animation(anim,
+					comp1.getHand()[comp1Stk[count]].getSprite(), new Point(
+							comp2.getHand()[comp2Stk[count]].getSprite()
+									.getLocation().x,
+							comp2.getHand()[comp2Stk[count]].getSprite()
+									.getLocation().y - 30), 25));
+
+			comp2.getHand()[comp2Stk[count]] = comp1.getHand()[comp1Stk[count]];
+
+			anim.createAnimation(new Animation(anim,
+					player.getHand()[playerStk[count]].getSprite(), new Point(
+							comp1.getHand()[comp1Stk[count]].getSprite()
+									.getLocation().x - 30,
+							comp1.getHand()[comp1Stk[count]].getSprite()
+									.getLocation().y), 25));
+
+			comp1.getHand()[comp1Stk[count]] = player.getHand()[playerStk[count]];
+
+			// sets the moved cards to be not selected
+			comp1.getHand()[comp1Stk[count]].getSprite().setSelectedToPass(
+					false);
+			comp2.getHand()[comp2Stk[count]].getSprite().setSelectedToPass(
+					false);
+			comp3.getHand()[comp3Stk[count]].getSprite().setSelectedToPass(
+					false);
+		}
+
+		// moves the cards into the players hand from computer player 3
+		player.getHand()[playerStk[1]] = temp1;
+		player.getHand()[playerStk[2]] = temp2;
+		player.getHand()[playerStk[3]] = temp3;
+
+		// sets the moved cards to be not selected
+		player.getHand()[playerStk[1]].getSprite().setSelectedToPass(false);
+		player.getHand()[playerStk[2]].getSprite().setSelectedToPass(false);
+		player.getHand()[playerStk[3]].getSprite().setSelectedToPass(false);
+
+		// sorts and animates the cards to the correct position in the players
+		// hand
+		player.sortHand();
+		for (int i = 0; i < player.getHand().length; i++) {
+			if ((int) player.getHand()[i].getSprite().getX() != player
+					.getCardPositionX(i)) {
+				anim.createAnimation(new Animation(anim, player.getHand()[i]
+						.getSprite(),
+						new Point(player.getCardPositionX(i), 445), 50));
+			}
 		}
 	}
 
@@ -507,6 +626,10 @@ public class HeartsGame {
 					.getSprite(), new Point(x1, y1), 40));
 			anim.createAnimation(new Animation(anim, temp.getHand()[randNum2]
 					.getSprite(), new Point(x2, y2), 40));
+
+			temp.getHand()[randNum].getSprite().setSelectedToPass(true);
+			temp.getHand()[randNum1].getSprite().setSelectedToPass(true);
+			temp.getHand()[randNum2].getSprite().setSelectedToPass(true);
 		}
 	}
 
