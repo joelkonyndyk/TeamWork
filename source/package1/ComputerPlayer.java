@@ -9,6 +9,7 @@ public class ComputerPlayer {
 	private Deck deck;
 
 	private Point midPoint;
+	private Point stackLocation;
 
 	private Card[] hand;
 
@@ -54,6 +55,9 @@ public class ComputerPlayer {
 	}
 
 	public void UpdateHand(AnimationController anim) {
+		
+		int animSpeed = 25;
+		
 		boolean swapped = true;
 		Card tmp;
 
@@ -71,11 +75,11 @@ public class ComputerPlayer {
 									hand[i + 1].getSprite(), new Point(
 											(int) hand[i + 1].getSprite()
 													.getX(), posBaseY
-													+ (i * 20)), 10));
+													+ (i * 20)), animSpeed));
 						} else {
 							anim.createAnimation(new Animation(anim,
 									hand[i + 1].getSprite(), new Point(posBaseX
-											+ (i * 20), 30), 10));
+											+ (i * 20), 30), animSpeed));
 						}
 
 						// Switches the spot of the card in the computers hand
@@ -92,7 +96,7 @@ public class ComputerPlayer {
 		}
 	}
 
-	public void addCard(Card c) {
+	public void addCardToStack(Card c) {
 		cards.push(c);
 	}
 
@@ -118,6 +122,14 @@ public class ComputerPlayer {
 
 	public Point getMidPoint() {
 		return midPoint;
+	}
+	
+	public Point getStackLocation(){
+		return stackLocation;
+	}
+	
+	public void setStackLocation(Point p){
+		stackLocation = p;
 	}
 
 	public void setIsSideComp(boolean b) {

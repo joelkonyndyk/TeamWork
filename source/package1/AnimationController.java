@@ -49,4 +49,12 @@ public class AnimationController {
 	public void removeAnimation(Animation block) {
 		animList.remove(block);
 	}
+	
+	public boolean isEmpty(){
+		if (animList.isEmpty()){
+			return true;
+		} else{
+			return false;
+		}
+	}
 }
