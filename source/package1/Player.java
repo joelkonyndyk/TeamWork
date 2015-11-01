@@ -10,10 +10,11 @@ public class Player {
 
 	private Card[] hand;
 	private Card[] sort;
-	
+
 	private Card middleCard;
 
 	private Point midPoint;
+	private Point stackLocation = new Point(450, 700);
 
 	private Stack<Card> cards = new Stack<Card>();
 
@@ -74,6 +75,8 @@ public class Player {
 
 	public void UpdateHand(AnimationController anim) {
 
+		int animSpeed = 25;
+
 		// This will shift shift the players hand to left when there are open
 		// spaces
 		// Note: this does not work when multiple cards are selected at once
@@ -91,7 +94,7 @@ public class Player {
 						// Animates the cards to the left if needed
 						anim.createAnimation(new Animation(anim, hand[i + 1]
 								.getSprite(), new Point(playerHandPositionX[i],
-								445), 10));
+								445), animSpeed));
 
 						// Switches the spot of the card in the players hand
 						tmp = hand[i];
@@ -132,13 +135,37 @@ public class Player {
 		// startingPos = 0;
 	}
 
-	public void addCard(Card c) {
-		cards.push(c);
-	}
+	// public void addCard(Card c) {
+	// cards.push(c);
+	// }
 
 	// ///////////////////
 	// Getters and Setters
 	// ////////////////////
+
+	public void addCardToStack(Card c) {
+		cards.push(c);
+	}
+	
+	public Card getCardFromStack(){
+		Card temp = cards.peek();
+		cards.pop();
+		return temp;		
+	}
+	
+	public Stack<Card> getCardStack(){
+		return cards;
+	}
+	
+	public int getVisibleLength(){
+		int count = 0;		
+		for (int i = 0; i < hand.length; i++) {
+			if (hand[i].getCardPlace() != -1){
+				count++;
+			}
+		}		
+		return count;
+	}
 
 	public String getName() {
 		return name;
@@ -159,17 +186,21 @@ public class Player {
 	public void setMidPoint(Point p) {
 		midPoint = p;
 	}
-	
-	public Point getMidPoint(){
+
+	public Point getMidPoint() {
 		return midPoint;
 	}
-	
-	public Card getMiddleCard(){
+
+	public Card getMiddleCard() {
 		return middleCard;
 	}
-	
-	public void setMiddleCard(Card c){
+
+	public void setMiddleCard(Card c) {
 		middleCard = c;
+	}
+
+	public Point getStackLocation() {
+		return stackLocation;
 	}
 
 	public boolean isTurn() {

@@ -36,6 +36,8 @@ public class HeartsGame {
 
 	private AnimationController anim;
 
+	private StopWatch time = new StopWatch();
+
 	private Random rand = new Random();
 
 	SpriteSheet spriteSheet;
@@ -53,6 +55,12 @@ public class HeartsGame {
 
 	private boolean arrowBtnEnabled = true;
 	private boolean arrowBtnVisible = true;
+	private boolean arrowBtnPressed = false;
+
+	private boolean cardsInMiddle = false;
+	private boolean cardClicked = false;
+
+	private boolean drawMiddleCards = false;
 
 	private BufferedImage ArrowButton = null;
 	private BufferedImage ArrowButtonDisabled = null;
@@ -92,6 +100,10 @@ public class HeartsGame {
 		comp1.setMidPoint(new Point(342, 230));
 		comp2.setMidPoint(new Point(414, 180));
 		comp3.setMidPoint(new Point(486, 230));
+
+		comp1.setStackLocation(new Point(-100, 300));
+		comp2.setStackLocation(new Point(450, -100));
+		comp3.setStackLocation(new Point(1000, 300));
 
 		// Makes sure the computers and the player never have the same name
 		while (comp1.getName().equals(plyrName)) {
@@ -253,10 +265,11 @@ public class HeartsGame {
 
 		if (mouseClicked) {
 
-			// this is the logic that sends cards to the middle when clicked
 			if (playerTurn) {
+				// this is the logic that sends cards to the middle when clicked
 				for (int i = 0; i < player.getHand().length; i++) {
-					if (player.getHand()[i].getSprite().getVisibleBounds(i)
+					if (player.getHand()[i].getSprite()
+							.getVisibleBounds(i, player.getVisibleLength())
 							.contains(pointClicked)) {
 						int max = 12;
 						int min = 0;
@@ -285,25 +298,32 @@ public class HeartsGame {
 						comp3.setMiddleCard(comp3.getHand()[temp3]);
 						comp3.getHand()[temp3] = blankCard;
 
+						// sets the animation speed of the cards
+						int animSpeed = 35;
+
 						// Animation that sends cards to the middle
 						anim.createAnimation(new Animation(anim, player
 								.getMiddleCard().getSprite(), player
-								.getMidPoint(), 60));
+								.getMidPoint(), animSpeed));
 						anim.createAnimation(new Animation(anim, comp1
 								.getMiddleCard().getSprite(), comp1
-								.getMidPoint(), 60));
+								.getMidPoint(), animSpeed));
 						anim.createAnimation(new Animation(anim, comp2
 								.getMiddleCard().getSprite(), comp2
-								.getMidPoint(), 60));
+								.getMidPoint(), animSpeed));
 						anim.createAnimation(new Animation(anim, comp3
 								.getMiddleCard().getSprite(), comp3
-								.getMidPoint(), 60));
+								.getMidPoint(), animSpeed));
 
 						// shifts the hand to the left if needed
 						player.UpdateHand(anim);
 						comp1.UpdateHand(anim);
 						comp2.UpdateHand(anim);
 						comp3.UpdateHand(anim);
+
+						cardClicked = true;
+						playerTurn = false;
+						drawMiddleCards = true;
 					}
 				}
 			}
@@ -312,7 +332,7 @@ public class HeartsGame {
 				if (ArrowBtn.getBounds().contains(pointClicked) && readyToPass) {
 					passCards();
 					arrowBtnVisible = false;
-					playerTurn = true;
+					arrowBtnPressed = true;
 				}
 			}
 
@@ -413,6 +433,92 @@ public class HeartsGame {
 			mouseClicked = false;
 		}
 
+		if (anim.isEmpty()) {
+			// if there are no animations occurring and the player has sent
+			// a card to the middle
+			if (cardClicked) {
+				cardsInMiddle = true;
+				cardClicked = false;
+			}
+
+			// Makes sure players turn does not start until animation ends
+			if (arrowBtnPressed) {
+				arrowBtnPressed = false;
+				playerTurn = true;
+			}
+		}
+
+		if (cardsInMiddle) {
+			if (!time.isRunning()) {
+				time.start();
+			}
+			if (time.getElapsedTimeSecs() > .75) {
+
+				// sets winner randomly for now
+				Point p = player.getStackLocation();
+				int temp = rand.nextInt((4 - 1) + 1) + 1;
+				if (temp == 2) {
+					p = comp1.getStackLocation();
+				} else if (temp == 3) {
+					p = comp2.getStackLocation();
+				} else if (temp == 4) {
+					p = comp3.getStackLocation();
+				}
+
+				// Create method to determine who won the hand and insert
+				// here
+				// Then set the Point p to the winners stackLocation
+				// Point p = player.getStackLocation();
+
+				int animSpeed = 30;
+
+				if (anim.isEmpty()) {
+					anim.createAnimation(new Animation(anim, player
+							.getMiddleCard().getSprite(), p, animSpeed));
+					anim.createAnimation(new Animation(anim, comp1
+							.getMiddleCard().getSprite(), p, animSpeed));
+					anim.createAnimation(new Animation(anim, comp2
+							.getMiddleCard().getSprite(), p, animSpeed));
+					anim.createAnimation(new Animation(anim, comp3
+							.getMiddleCard().getSprite(), p, animSpeed));
+
+					cardsInMiddle = false;
+				}
+
+				// Set middle cards to winners stack here
+				// Sloppy, make this better when possible
+				if (temp == 1) {
+					player.addCardToStack(player.getMiddleCard());
+					player.addCardToStack(comp1.getMiddleCard());
+					player.addCardToStack(comp2.getMiddleCard());
+					player.addCardToStack(comp3.getMiddleCard());
+				} else if (temp == 2) {
+					comp1.addCardToStack(player.getMiddleCard());
+					comp1.addCardToStack(comp1.getMiddleCard());
+					comp1.addCardToStack(comp2.getMiddleCard());
+					comp1.addCardToStack(comp3.getMiddleCard());
+				} else if (temp == 3) {
+					comp2.addCardToStack(player.getMiddleCard());
+					comp2.addCardToStack(comp1.getMiddleCard());
+					comp2.addCardToStack(comp2.getMiddleCard());
+					comp2.addCardToStack(comp3.getMiddleCard());
+				} else if (temp == 4) {
+					comp3.addCardToStack(player.getMiddleCard());
+					comp3.addCardToStack(comp1.getMiddleCard());
+					comp3.addCardToStack(comp2.getMiddleCard());
+					comp3.addCardToStack(comp3.getMiddleCard());
+				}
+
+			}
+		}
+		if (time.getElapsedTimeSecs() > .75 && anim.isEmpty()) {
+			time.stop();
+			// set it to be winning players turn
+			playerTurn = true;
+
+			drawMiddleCards = false;
+		}
+
 		// Create if statement here to detect if it is the beginning of a
 		// passing round
 		// if it is select 3 cards from the computers hands and animate them
@@ -442,14 +548,7 @@ public class HeartsGame {
 		DrawOutline(comp2.getName(), 280, 20, g);
 		DrawOutline(comp3.getName(), 780, 60, g);
 
-		for (int i = 0; i < player.getHand().length; i++) {
-			player.getHand()[i].getSprite().paint(g);
-			comp1.getHand()[i].getSprite().paint(g);
-			comp2.getHand()[i].getSprite().paint(g);
-			comp3.getHand()[i].getSprite().paint(g);
-		}
-
-		if (playerTurn) {
+		if (drawMiddleCards) {
 			try {
 				player.getMiddleCard().getSprite().paint(g);
 				comp1.getMiddleCard().getSprite().paint(g);
@@ -458,6 +557,13 @@ public class HeartsGame {
 			} catch (NullPointerException e) {
 
 			}
+		}
+
+		for (int i = 0; i < player.getHand().length; i++) {
+			player.getHand()[i].getSprite().paint(g);
+			comp1.getHand()[i].getSprite().paint(g);
+			comp2.getHand()[i].getSprite().paint(g);
+			comp3.getHand()[i].getSprite().paint(g);
 		}
 
 		// Need to set up logic as to whether the pass button should be shown
@@ -473,6 +579,9 @@ public class HeartsGame {
 
 	// currently implements the pass left only
 	public void passCards() {
+
+		// sets the animation speed of the passing cards
+		int animSpeed = 50;
 
 		int playerStk[] = new int[4];
 		int comp1Stk[] = new int[4];
@@ -519,7 +628,7 @@ public class HeartsGame {
 							comp3.getHand()[comp3Stk[count]].getSprite()
 									.getLocation().x + 30,
 							comp3.getHand()[comp3Stk[count]].getSprite()
-									.getLocation().y), 25));
+									.getLocation().y), animSpeed));
 
 			comp3.getHand()[comp3Stk[count]] = comp2.getHand()[comp2Stk[count]];
 
@@ -528,7 +637,7 @@ public class HeartsGame {
 							comp2.getHand()[comp2Stk[count]].getSprite()
 									.getLocation().x,
 							comp2.getHand()[comp2Stk[count]].getSprite()
-									.getLocation().y - 30), 25));
+									.getLocation().y - 30), animSpeed));
 
 			comp2.getHand()[comp2Stk[count]] = comp1.getHand()[comp1Stk[count]];
 
@@ -537,7 +646,7 @@ public class HeartsGame {
 							comp1.getHand()[comp1Stk[count]].getSprite()
 									.getLocation().x - 30,
 							comp1.getHand()[comp1Stk[count]].getSprite()
-									.getLocation().y), 25));
+									.getLocation().y), animSpeed));
 
 			comp1.getHand()[comp1Stk[count]] = player.getHand()[playerStk[count]];
 
@@ -568,7 +677,7 @@ public class HeartsGame {
 					.getCardPositionX(i)) {
 				anim.createAnimation(new Animation(anim, player.getHand()[i]
 						.getSprite(),
-						new Point(player.getCardPositionX(i), 445), 50));
+						new Point(player.getCardPositionX(i), 445), animSpeed));
 			}
 		}
 	}

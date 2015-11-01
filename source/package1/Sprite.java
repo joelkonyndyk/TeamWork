@@ -483,4 +483,14 @@ public class Sprite implements Cloneable, Serializable {
 					.getRealY()), this.getWidth() - 22, this.getHeight());
 		}
 	}
+	
+	public Rectangle getVisibleBounds(int i, int visCount) {
+		if (i == (visCount - 1)) {
+			return new Rectangle(Math.round(this.getRealX()), Math.round(this
+					.getRealY()), this.getWidth(), this.getHeight());
+		} else {
+			return new Rectangle(Math.round(this.getRealX()), Math.round(this
+					.getRealY()), this.getWidth() - 22, this.getHeight());
+		}
+	}
 }
